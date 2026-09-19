@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #071626;
+    color: #E6F4F1;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom modern scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0B1F33;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #244B6A;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #20C6B7;
+}
+
+/* Glow effects */
+.glow-teal {
+  box-shadow: 0 0 15px rgba(32, 198, 183, 0.35);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
+}
+
+.glow-coral {
+  box-shadow: 0 0 15px rgba(240, 82, 82, 0.4);
+}
+
+/* Railway Track Pattern Background */
+.bg-rail-pattern {
+  background-color: #071626;
+  background-image: radial-gradient(#163B5C 0.75px, transparent 0.75px), radial-gradient(#102A43 0.75px, #071626 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
