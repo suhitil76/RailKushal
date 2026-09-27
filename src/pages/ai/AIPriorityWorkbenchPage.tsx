@@ -216,7 +216,7 @@ export const AIPriorityWorkbenchPage: React.FC<AIPriorityWorkbenchPageProps> = (
                   <BarChart data={componentChartData}>
                     <XAxis dataKey="name" stroke="#6E8AA3" fontSize={10} tickLine={false} />
                     <YAxis stroke="#6E8AA3" fontSize={10} tickLine={false} domain={[0, 30]} />
-                    <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                    <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
                     <Bar dataKey="score" fill="#20C6B7" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
