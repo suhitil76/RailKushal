@@ -47,18 +47,18 @@ export const AnalyticsReportsPage: React.FC = () => {
   return (
     <div className="p-6 space-y-6 max-w-[1700px] mx-auto print:p-2">
       {/* Top Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0B1F33] border border-[#244B6A] p-5 rounded-2xl shadow-xl print:hidden">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-rail-deep border border-rail-border p-5 rounded-2xl shadow-xl print:hidden">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded bg-[#20C6B7]/20 border border-[#20C6B7]/40 text-[#20C6B7] text-[10px] font-bold uppercase tracking-wider font-mono">
+            <span className="px-2 py-0.5 rounded bg-rail-teal/20 border border-rail-teal/40 text-rail-teal text-[10px] font-bold uppercase tracking-wider font-mono">
               Operational Intelligence
             </span>
-            <span className="text-xs text-[#A7C1D4]">Performance Analytics &amp; Safety Compliance</span>
+            <span className="text-xs text-rail-secondary">Performance Analytics &amp; Safety Compliance</span>
           </div>
-          <h1 className="text-xl font-extrabold text-[#E6F4F1] mt-1 tracking-tight">
+          <h1 className="text-xl font-extrabold text-rail-text mt-1 tracking-tight">
             Pune Division Block Planning Analytics &amp; Audit Reports
           </h1>
-          <p className="text-xs text-[#A7C1D4] mt-0.5">
+          <p className="text-xs text-rail-secondary mt-0.5">
             Empirical block utilization rates, train conflict reduction statistics, and recurring infrastructure defect trends.
           </p>
         </div>
@@ -66,14 +66,14 @@ export const AnalyticsReportsPage: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={handleExportCSV}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#102A43] hover:bg-[#163B5C] border border-[#244B6A] text-xs font-semibold text-[#A7C1D4] hover:text-[#E6F4F1] transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rail-surface hover:bg-rail-elevated border border-rail-border text-xs font-semibold text-rail-secondary hover:text-rail-text transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
           </button>
           <button
             onClick={handlePrint}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#20C6B7] hover:bg-[#20C6B7]/90 text-[#071626] font-bold text-xs transition-colors shadow-md"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-rail-teal hover:bg-rail-teal/90 text-white font-bold text-xs transition-colors shadow-md"
           >
             <Printer className="w-3.5 h-3.5" />
             <span>Print Report View</span>
@@ -83,33 +83,33 @@ export const AnalyticsReportsPage: React.FC = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl bg-[#0B1F33] border border-[#244B6A]">
-          <span className="text-[11px] font-semibold text-[#6E8AA3] uppercase">Productive Block Ratio</span>
-          <div className="text-2xl font-black text-[#20C6B7] mt-2 font-mono">87.4%</div>
-          <p className="text-[10px] text-[#34D399] mt-1">+13.8% over 2025</p>
+        <div className="p-4 rounded-xl bg-rail-deep border border-rail-border">
+          <span className="text-[11px] font-semibold text-rail-muted uppercase">Productive Block Ratio</span>
+          <div className="text-2xl font-black text-rail-teal mt-2 font-mono">87.4%</div>
+          <p className="text-[10px] text-rail-emerald mt-1">+13.8% over 2025</p>
         </div>
-        <div className="p-4 rounded-xl bg-[#0B1F33] border border-[#244B6A]">
-          <span className="text-[11px] font-semibold text-[#38BDF8] uppercase">Integrated Corridor Ratio</span>
-          <div className="text-2xl font-black text-[#38BDF8] mt-2 font-mono">44.8%</div>
-          <p className="text-[10px] text-[#A7C1D4] mt-1">Shared multi-department</p>
+        <div className="p-4 rounded-xl bg-rail-deep border border-rail-border">
+          <span className="text-[11px] font-semibold text-rail-cyan uppercase">Integrated Corridor Ratio</span>
+          <div className="text-2xl font-black text-rail-cyan mt-2 font-mono">44.8%</div>
+          <p className="text-[10px] text-rail-secondary mt-1">Shared multi-department</p>
         </div>
-        <div className="p-4 rounded-xl bg-[#0B1F33] border border-[#244B6A]">
-          <span className="text-[11px] font-semibold text-[#34D399] uppercase">Avg Decision Latency</span>
-          <div className="text-2xl font-black text-[#34D399] mt-2 font-mono">4.2 Hrs</div>
-          <p className="text-[10px] text-[#A7C1D4] mt-1">From demand to sanction</p>
+        <div className="p-4 rounded-xl bg-rail-deep border border-rail-border">
+          <span className="text-[11px] font-semibold text-rail-emerald uppercase">Avg Decision Latency</span>
+          <div className="text-2xl font-black text-rail-emerald mt-2 font-mono">4.2 Hrs</div>
+          <p className="text-[10px] text-rail-secondary mt-1">From demand to sanction</p>
         </div>
-        <div className="p-4 rounded-xl bg-[#0B1F33] border border-[#244B6A]">
-          <span className="text-[11px] font-semibold text-[#F4B942] uppercase">Train Conflicts Prevented</span>
-          <div className="text-2xl font-black text-[#F4B942] mt-2 font-mono">185 Mins</div>
-          <p className="text-[10px] text-[#34D399] mt-1">Through nocturnal RBP</p>
+        <div className="p-4 rounded-xl bg-rail-deep border border-rail-border">
+          <span className="text-[11px] font-semibold text-rail-amber uppercase">Train Conflicts Prevented</span>
+          <div className="text-2xl font-black text-rail-amber mt-2 font-mono">185 Mins</div>
+          <p className="text-[10px] text-rail-emerald mt-1">Through nocturnal RBP</p>
         </div>
       </div>
 
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* Top Risk Corridors Bar (7 cols) */}
-        <div className="lg:col-span-7 p-5 rounded-2xl bg-[#0B1F33] border border-[#244B6A]">
-          <h3 className="text-xs font-bold text-[#E6F4F1] uppercase tracking-wider mb-3">
+        <div className="lg:col-span-7 p-5 rounded-2xl bg-rail-deep border border-rail-border">
+          <h3 className="text-xs font-bold text-rail-text uppercase tracking-wider mb-3">
             Top Risk Sections (Cumulative Hazard Index)
           </h3>
           <div className="h-56">
@@ -122,14 +122,14 @@ export const AnalyticsReportsPage: React.FC = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <p className="text-[11px] text-[#A7C1D4] text-center mt-2">
+          <p className="text-[11px] text-rail-secondary text-center mt-2">
             Pimpri–Chinchwad and Chinchwad–Akurdi require prioritized weekend nocturnal tamping windows.
           </p>
         </div>
 
         {/* Recurring Defect Categories (5 cols) */}
-        <div className="lg:col-span-5 p-5 rounded-2xl bg-[#0B1F33] border border-[#244B6A]">
-          <h3 className="text-xs font-bold text-[#E6F4F1] uppercase tracking-wider mb-3">
+        <div className="lg:col-span-5 p-5 rounded-2xl bg-rail-deep border border-rail-border">
+          <h3 className="text-xs font-bold text-rail-text uppercase tracking-wider mb-3">
             Recurring Defect Classification Breakdown
           </h3>
           <div className="h-48">
@@ -147,9 +147,9 @@ export const AnalyticsReportsPage: React.FC = () => {
               <div key={i} className="flex justify-between items-center text-xs">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: d.color }} />
-                  <span className="text-[#A7C1D4] text-[11px]">{d.name}</span>
+                  <span className="text-rail-secondary text-[11px]">{d.name}</span>
                 </div>
-                <span className="font-mono font-bold text-[#E6F4F1] text-[11px]">{d.count} Defect Logs</span>
+                <span className="font-mono font-bold text-rail-text text-[11px]">{d.count} Defect Logs</span>
               </div>
             ))}
           </div>

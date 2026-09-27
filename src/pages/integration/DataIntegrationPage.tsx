@@ -73,18 +73,18 @@ export const DataIntegrationPage: React.FC = () => {
   return (
     <div className="p-6 space-y-6 max-w-[1700px] mx-auto">
       {/* Top Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0B1F33] border border-[#244B6A] p-5 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-rail-deep border border-rail-border p-5 rounded-2xl shadow-xl">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded bg-[#38BDF8]/20 border border-[#38BDF8]/40 text-[#38BDF8] text-[10px] font-bold uppercase tracking-wider font-mono">
+            <span className="px-2 py-0.5 rounded bg-rail-cyan/20 border border-rail-cyan/40 text-rail-cyan text-[10px] font-bold uppercase tracking-wider font-mono">
               Enterprise Integration Centre
             </span>
-            <span className="text-xs text-[#A7C1D4]">Admin Pipeline &amp; CSV Adapter Hub</span>
+            <span className="text-xs text-rail-secondary">Admin Pipeline &amp; CSV Adapter Hub</span>
           </div>
-          <h1 className="text-xl font-extrabold text-[#E6F4F1] mt-1 tracking-tight">
+          <h1 className="text-xl font-extrabold text-rail-text mt-1 tracking-tight">
             Indian Railways Digital Feeds &amp; Batch CSV Ingestion
           </h1>
-          <p className="text-xs text-[#A7C1D4] mt-0.5">
+          <p className="text-xs text-rail-secondary mt-0.5">
             Interconnects TMS, SMMS, TDMS, and COA feeds into the RailKushal unified decision layer.
           </p>
         </div>
@@ -96,38 +96,38 @@ export const DataIntegrationPage: React.FC = () => {
           <div 
             key={s.id}
             className={`p-4 rounded-xl border transition-all cursor-pointer ${
-              selectedSource === s.id ? 'bg-[#163B5C] border-[#20C6B7] shadow-lg shadow-cyan-950/40' : 'bg-[#0B1F33] border-[#244B6A] hover:bg-[#102A43]'
+              selectedSource === s.id ? 'bg-rail-elevated border-rail-teal shadow-lg shadow-cyan-950/40' : 'bg-rail-deep border-rail-border hover:bg-rail-surface'
             }`}
             onClick={() => setSelectedSource(s.id)}
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-bold text-[#E6F4F1]">{s.name}</span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#34D399]/20 text-[#34D399]">
+              <span className="text-xs font-bold text-rail-text">{s.name}</span>
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-rail-emerald/20 text-rail-emerald">
                 {s.status}
               </span>
             </div>
-            <div className="flex items-center justify-between text-xs text-[#A7C1D4] font-mono mt-3">
+            <div className="flex items-center justify-between text-xs text-rail-secondary font-mono mt-3">
               <span>{s.count} Active Records</span>
-              <span>Quality: <strong className="text-[#20C6B7]">{s.quality}</strong></span>
+              <span>Quality: <strong className="text-rail-teal">{s.quality}</strong></span>
             </div>
           </div>
         ))}
       </div>
 
       {/* CSV Ingestion Simulation & Validator */}
-      <div className="p-6 rounded-2xl bg-[#0B1F33] border border-[#244B6A] shadow-xl space-y-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-3 border-b border-[#244B6A]">
+      <div className="p-6 rounded-2xl bg-rail-deep border border-rail-border shadow-xl space-y-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-3 border-b border-rail-border">
           <div>
-            <h3 className="text-xs font-bold text-[#E6F4F1] uppercase tracking-wider">
+            <h3 className="text-xs font-bold text-rail-text uppercase tracking-wider">
               Batch CSV Upload &amp; Schema Validation Engine
             </h3>
-            <p className="text-xs text-[#A7C1D4] mt-0.5">
+            <p className="text-xs text-rail-secondary mt-0.5">
               Upload departmental defect registers for automated column mapping, deduplication, and AI scoring.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
-            <label className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#20C6B7] hover:bg-[#20C6B7]/90 text-[#071626] font-bold text-xs shadow-md cursor-pointer transition-colors">
+            <label className="flex items-center gap-2 px-4 py-2 rounded-xl bg-rail-teal hover:bg-rail-teal/90 text-white font-bold text-xs shadow-md cursor-pointer transition-colors">
               <Upload className="w-4 h-4" />
               <span>{isImporting ? 'Parsing CSV...' : 'Upload Maintenance CSV'}</span>
               <input type="file" accept=".csv" onChange={handleSimulateCSVUpload} className="hidden" />
@@ -139,20 +139,20 @@ export const DataIntegrationPage: React.FC = () => {
         {importPreview && (
           <div className="space-y-3 animate-in fade-in">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#34D399] flex items-center gap-1.5">
+              <span className="text-xs font-bold text-rail-emerald flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4" /> 4 Records Validated against CRIS Railway Standards
               </span>
               <button
                 onClick={handleCommitImport}
-                className="px-3 py-1.5 rounded-lg bg-[#34D399] hover:bg-[#34D399]/90 text-[#071626] font-bold text-xs"
+                className="px-3 py-1.5 rounded-lg bg-rail-emerald hover:bg-rail-emerald/90 text-white font-bold text-xs"
               >
                 Commit Staged Records to Database
               </button>
             </div>
 
-            <div className="bg-[#071626] border border-[#244B6A] rounded-xl overflow-hidden">
+            <div className="bg-rail-bg border border-rail-border rounded-xl overflow-hidden">
               <table className="w-full text-left text-xs">
-                <thead className="bg-[#102A43] text-[#A7C1D4] text-[10px] uppercase font-semibold">
+                <thead className="bg-rail-surface text-rail-secondary text-[10px] uppercase font-semibold">
                   <tr>
                     <th className="p-3">Task Code</th>
                     <th className="p-3">Title</th>
@@ -164,19 +164,19 @@ export const DataIntegrationPage: React.FC = () => {
                 </thead>
                 <tbody className="divide-y divide-[#244B6A]/50">
                   {importPreview.map((r, i) => (
-                    <tr key={i} className="text-[#E6F4F1]">
-                      <td className="p-3 font-mono font-bold text-[#38BDF8]">{r.taskCode}</td>
+                    <tr key={i} className="text-rail-text">
+                      <td className="p-3 font-mono font-bold text-rail-cyan">{r.taskCode}</td>
                       <td className="p-3">{r.title}</td>
-                      <td className="p-3 text-[#A7C1D4]">{r.defect}</td>
+                      <td className="p-3 text-rail-secondary">{r.defect}</td>
                       <td className="p-3">
                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                          r.severity === 'CRITICAL' ? 'bg-[#F05252]/20 text-[#F05252]' : 'bg-[#F4B942]/20 text-[#F4B942]'
+                          r.severity === 'CRITICAL' ? 'bg-rail-coral/20 text-rail-coral' : 'bg-rail-amber/20 text-rail-amber'
                         }`}>
                           {r.severity}
                         </span>
                       </td>
-                      <td className="p-3 font-mono text-[#6E8AA3]">{r.section}</td>
-                      <td className="p-3 text-[#34D399] font-bold text-[10px]">READY TO COMMIT</td>
+                      <td className="p-3 font-mono text-rail-muted">{r.section}</td>
+                      <td className="p-3 text-rail-emerald font-bold text-[10px]">READY TO COMMIT</td>
                     </tr>
                   ))}
                 </tbody>
@@ -187,7 +187,7 @@ export const DataIntegrationPage: React.FC = () => {
 
         {/* Downloadable Sample Templates */}
         <div className="pt-2">
-          <h4 className="text-xs font-bold text-[#A7C1D4] uppercase tracking-wider mb-2.5">
+          <h4 className="text-xs font-bold text-rail-secondary uppercase tracking-wider mb-2.5">
             Download Standard Indian Railways CSV Templates:
           </h4>
           <div className="flex flex-wrap gap-2">
@@ -199,7 +199,7 @@ export const DataIntegrationPage: React.FC = () => {
               <button
                 key={tpl}
                 onClick={() => downloadSampleTemplate(tpl)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#071626] hover:bg-[#102A43] border border-[#244B6A] text-[#A7C1D4] hover:text-[#20C6B7] text-xs font-mono transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rail-bg hover:bg-rail-surface border border-rail-border text-rail-secondary hover:text-rail-teal text-xs font-mono transition-colors"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>{tpl}</span>

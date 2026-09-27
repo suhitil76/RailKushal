@@ -4,8 +4,8 @@
 
 @layer base {
   body {
-    background-color: #071626;
-    color: #E6F4F1;
+    background-color: #F8FAFC;
+    color: #0F172A;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
   }
@@ -18,35 +18,35 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0B1F33;
+  background: #F1F5F9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #244B6A;
+  background: #CBD5E1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #20C6B7;
+  background: #94A3B8;
 }
 
 /* Glow effects */
 .glow-teal {
-  box-shadow: 0 0 15px rgba(32, 198, 183, 0.35);
+  box-shadow: 0 0 15px rgba(15, 118, 110, 0.2);
 }
 
 .glow-cyan {
-  box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
+  box-shadow: 0 0 15px rgba(3, 105, 161, 0.2);
 }
 
 .glow-coral {
-  box-shadow: 0 0 15px rgba(240, 82, 82, 0.4);
+  box-shadow: 0 0 15px rgba(185, 28, 28, 0.2);
 }
 
 /* Railway Track Pattern Background */
 .bg-rail-pattern {
-  background-color: #071626;
-  background-image: radial-gradient(#163B5C 0.75px, transparent 0.75px), radial-gradient(#102A43 0.75px, #071626 0.75px);
+  background-color: #F8FAFC;
+  background-image: radial-gradient(#E2E8F0 0.75px, transparent 0.75px), radial-gradient(#F1F5F9 0.75px, #F8FAFC 0.75px);
   background-size: 30px 30px;
   background-position: 0 0, 15px 15px;
 }

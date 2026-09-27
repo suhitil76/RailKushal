@@ -84,18 +84,18 @@ export const WhatIfSimulatorPage: React.FC = () => {
   return (
     <div className="p-6 space-y-6 max-w-[1700px] mx-auto">
       {/* Top Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0B1F33] border border-[#244B6A] p-5 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-rail-deep border border-rail-border p-5 rounded-2xl shadow-xl">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded bg-[#20C6B7]/20 border border-[#20C6B7]/40 text-[#20C6B7] text-[10px] font-bold uppercase tracking-wider font-mono">
+            <span className="px-2 py-0.5 rounded bg-rail-teal/20 border border-rail-teal/40 text-rail-teal text-[10px] font-bold uppercase tracking-wider font-mono">
               Scenario Modeling Engine
             </span>
-            <span className="text-xs text-[#A7C1D4]">Deterministic Disruption &amp; Dovetailing Simulator</span>
+            <span className="text-xs text-rail-secondary">Deterministic Disruption &amp; Dovetailing Simulator</span>
           </div>
-          <h1 className="text-xl font-extrabold text-[#E6F4F1] mt-1 tracking-tight">
+          <h1 className="text-xl font-extrabold text-rail-text mt-1 tracking-tight">
             What-If Operations &amp; Disruption Sandbox
           </h1>
-          <p className="text-xs text-[#A7C1D4] mt-0.5">
+          <p className="text-xs text-rail-secondary mt-0.5">
             Test how unexpected monsoon surges, sudden train delays, or emergency rail fractures affect maintenance throughput.
           </p>
         </div>
@@ -103,7 +103,7 @@ export const WhatIfSimulatorPage: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={handleReset}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#102A43] hover:bg-[#163B5C] border border-[#244B6A] text-xs font-semibold text-[#A7C1D4] hover:text-[#E6F4F1] transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rail-surface hover:bg-rail-elevated border border-rail-border text-xs font-semibold text-rail-secondary hover:text-rail-text transition-colors"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Reset Sandbox</span>
@@ -112,8 +112,8 @@ export const WhatIfSimulatorPage: React.FC = () => {
       </div>
 
       {/* Simulator Scenario Controls */}
-      <div className="p-5 rounded-2xl bg-[#0B1F33] border border-[#244B6A] space-y-4">
-        <h3 className="text-xs font-bold text-[#E6F4F1] uppercase tracking-wider">
+      <div className="p-5 rounded-2xl bg-rail-deep border border-rail-border space-y-4">
+        <h3 className="text-xs font-bold text-rail-text uppercase tracking-wider">
           1. Select Planning Model
         </h3>
 
@@ -122,17 +122,17 @@ export const WhatIfSimulatorPage: React.FC = () => {
             onClick={() => setActiveScenario('COORDINATED')}
             className={`p-4 rounded-xl border cursor-pointer transition-all ${
               activeScenario === 'COORDINATED'
-                ? 'bg-[#163B5C] border-[#20C6B7] shadow-lg shadow-cyan-950/40'
-                : 'bg-[#071626] border-[#244B6A] hover:bg-[#102A43]'
+                ? 'bg-rail-elevated border-rail-teal shadow-lg shadow-cyan-950/40'
+                : 'bg-rail-bg border-rail-border hover:bg-rail-surface'
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs font-bold text-[#E6F4F1]">RailKushal Synchronized Planning</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#20C6B7]/20 text-[#20C6B7]">
+              <span className="text-xs font-bold text-rail-text">RailKushal Synchronized Planning</span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rail-teal/20 text-rail-teal">
                 AI Coordinated
               </span>
             </div>
-            <p className="text-xs text-[#A7C1D4] leading-relaxed">
+            <p className="text-xs text-rail-secondary leading-relaxed">
               Multi-department corridor bundling, timetable clash avoidance, and dynamic weather gating.
             </p>
           </div>
@@ -141,24 +141,24 @@ export const WhatIfSimulatorPage: React.FC = () => {
             onClick={() => setActiveScenario('BASELINE')}
             className={`p-4 rounded-xl border cursor-pointer transition-all ${
               activeScenario === 'BASELINE'
-                ? 'bg-[#163B5C] border-[#F05252] shadow-lg shadow-red-950/40'
-                : 'bg-[#071626] border-[#244B6A] hover:bg-[#102A43]'
+                ? 'bg-rail-elevated border-rail-coral shadow-lg shadow-red-950/40'
+                : 'bg-rail-bg border-rail-border hover:bg-rail-surface'
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-xs font-bold text-[#E6F4F1]">Decentralized Departmental Baseline</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#F05252]/20 text-[#F05252]">
+              <span className="text-xs font-bold text-rail-text">Decentralized Departmental Baseline</span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rail-coral/20 text-rail-coral">
                 Conventional Siloed
               </span>
             </div>
-            <p className="text-xs text-[#A7C1D4] leading-relaxed">
+            <p className="text-xs text-rail-secondary leading-relaxed">
               Engineering, TRD, and S&amp;T request individual blocks with duplicate setup, fit memos, and recurring speed restrictions.
             </p>
           </div>
         </div>
 
         {/* Dynamic Disruption Injections */}
-        <h3 className="text-xs font-bold text-[#E6F4F1] uppercase tracking-wider pt-2 border-t border-[#244B6A]/60">
+        <h3 className="text-xs font-bold text-rail-text uppercase tracking-wider pt-2 border-t border-rail-border/60">
           2. Inject Operational Stress Events
         </h3>
 
@@ -170,8 +170,8 @@ export const WhatIfSimulatorPage: React.FC = () => {
             }}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all ${
               heavyRainTriggered 
-                ? 'bg-[#38BDF8] text-[#071626] border-[#38BDF8]' 
-                : 'bg-[#071626] text-[#A7C1D4] border-[#244B6A] hover:border-[#38BDF8]'
+                ? 'bg-rail-cyan text-white border-rail-cyan' 
+                : 'bg-rail-bg text-rail-secondary border-rail-border hover:border-rail-cyan'
             }`}
           >
             <CloudRain className="w-4 h-4" />
@@ -185,8 +185,8 @@ export const WhatIfSimulatorPage: React.FC = () => {
             }}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all ${
               trainDelayTriggered 
-                ? 'bg-[#F4B942] text-[#071626] border-[#F4B942]' 
-                : 'bg-[#071626] text-[#A7C1D4] border-[#244B6A] hover:border-[#F4B942]'
+                ? 'bg-rail-amber text-white border-[#F4B942]' 
+                : 'bg-rail-bg text-rail-secondary border-rail-border hover:border-[#F4B942]'
             }`}
           >
             <Clock className="w-4 h-4" />
@@ -200,8 +200,8 @@ export const WhatIfSimulatorPage: React.FC = () => {
             }}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all ${
               emergencyDefectTriggered 
-                ? 'bg-[#F05252] text-white border-[#F05252]' 
-                : 'bg-[#071626] text-[#A7C1D4] border-[#244B6A] hover:border-[#F05252]'
+                ? 'bg-rail-coral text-white border-rail-coral' 
+                : 'bg-rail-bg text-rail-secondary border-rail-border hover:border-rail-coral'
             }`}
           >
             <AlertCircle className="w-4 h-4" />
@@ -212,31 +212,31 @@ export const WhatIfSimulatorPage: React.FC = () => {
 
       {/* Simulation Results Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl bg-[#0B1F33] border border-[#244B6A]">
-          <span className="text-[11px] font-semibold text-[#6E8AA3] uppercase">Productive Block Hours</span>
-          <div className="text-2xl font-black text-[#20C6B7] mt-2 font-mono">{metrics.productiveHours}h</div>
-          <p className="text-[10px] text-[#A7C1D4] mt-1">Idle Time: {metrics.idleHours}h</p>
+        <div className="p-4 rounded-xl bg-rail-deep border border-rail-border">
+          <span className="text-[11px] font-semibold text-rail-muted uppercase">Productive Block Hours</span>
+          <div className="text-2xl font-black text-rail-teal mt-2 font-mono">{metrics.productiveHours}h</div>
+          <p className="text-[10px] text-rail-secondary mt-1">Idle Time: {metrics.idleHours}h</p>
         </div>
-        <div className="p-4 rounded-xl bg-[#0B1F33] border border-[#244B6A]">
-          <span className="text-[11px] font-semibold text-[#38BDF8] uppercase">Train Conflict Minutes</span>
-          <div className="text-2xl font-black text-[#38BDF8] mt-2 font-mono">{metrics.trainConflictMinutes}m</div>
-          <p className="text-[10px] text-[#34D399] mt-1">-81% vs decentralized baseline</p>
+        <div className="p-4 rounded-xl bg-rail-deep border border-rail-border">
+          <span className="text-[11px] font-semibold text-rail-cyan uppercase">Train Conflict Minutes</span>
+          <div className="text-2xl font-black text-rail-cyan mt-2 font-mono">{metrics.trainConflictMinutes}m</div>
+          <p className="text-[10px] text-rail-emerald mt-1">-81% vs decentralized baseline</p>
         </div>
-        <div className="p-4 rounded-xl bg-[#0B1F33] border border-[#244B6A]">
-          <span className="text-[11px] font-semibold text-[#34D399] uppercase">Infrastructure Availability</span>
-          <div className="text-2xl font-black text-[#34D399] mt-2 font-mono">{metrics.availability.toFixed(1)}%</div>
-          <p className="text-[10px] text-[#A7C1D4] mt-1">Safety-weighted uptime</p>
+        <div className="p-4 rounded-xl bg-rail-deep border border-rail-border">
+          <span className="text-[11px] font-semibold text-rail-emerald uppercase">Infrastructure Availability</span>
+          <div className="text-2xl font-black text-rail-emerald mt-2 font-mono">{metrics.availability.toFixed(1)}%</div>
+          <p className="text-[10px] text-rail-secondary mt-1">Safety-weighted uptime</p>
         </div>
-        <div className="p-4 rounded-xl bg-[#0B1F33] border border-[#244B6A]">
-          <span className="text-[11px] font-semibold text-[#F4B942] uppercase">Weather Reschedules</span>
-          <div className="text-2xl font-black text-[#F4B942] mt-2 font-mono">{metrics.reschedules} Blocks</div>
-          <p className="text-[10px] text-[#A7C1D4] mt-1">Gated to safe slots</p>
+        <div className="p-4 rounded-xl bg-rail-deep border border-rail-border">
+          <span className="text-[11px] font-semibold text-rail-amber uppercase">Weather Reschedules</span>
+          <div className="text-2xl font-black text-rail-amber mt-2 font-mono">{metrics.reschedules} Blocks</div>
+          <p className="text-[10px] text-rail-secondary mt-1">Gated to safe slots</p>
         </div>
       </div>
 
       {/* Comparison Chart */}
-      <div className="p-5 rounded-2xl bg-[#0B1F33] border border-[#244B6A]">
-        <h3 className="text-xs font-bold text-[#E6F4F1] uppercase tracking-wider mb-4">
+      <div className="p-5 rounded-2xl bg-rail-deep border border-rail-border">
+        <h3 className="text-xs font-bold text-rail-text uppercase tracking-wider mb-4">
           Visual Efficiency Comparison: Baseline vs RailKushal Coordinated
         </h3>
         <div className="h-64">
@@ -250,7 +250,7 @@ export const WhatIfSimulatorPage: React.FC = () => {
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <p className="mt-3 text-center text-[10px] text-[#6E8AA3] font-mono">
+        <p className="mt-3 text-center text-[10px] text-rail-muted font-mono">
           Simulation estimate — not live operational data. Generated for evaluation of Problem Statement 26027.
         </p>
       </div>

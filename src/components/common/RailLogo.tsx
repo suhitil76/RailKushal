@@ -12,7 +12,7 @@ export const RailLogo: React.FC<RailLogoProps> = ({ size = 'md', showText = true
   return (
     <div className="flex items-center gap-2.5 select-none">
       <div 
-        className="relative flex items-center justify-center rounded-lg bg-gradient-to-br from-[#102A43] via-[#0B1F33] to-[#071626] border border-[#244B6A] p-1.5 shadow-md shadow-cyan-950/40"
+        className="relative flex items-center justify-center rounded-lg bg-gradient-to-br from-[#102A43] via-[#0B1F33] to-[#071626] border border-rail-border p-1.5 shadow-md shadow-cyan-950/40"
         style={{ width: iconSize + 12, height: iconSize + 12 }}
       >
         {/* SVG Railway tracks converging into a network intelligence node */}
@@ -42,14 +42,14 @@ export const RailLogo: React.FC<RailLogoProps> = ({ size = 'md', showText = true
       {showText && (
         <div className="flex flex-col leading-tight">
           <div className="flex items-center gap-1.5">
-            <span className={`font-black tracking-wider ${textSize} text-[#E6F4F1]`}>
-              RAIL<span className="text-[#20C6B7]">KUSHAL</span>
+            <span className={`font-black tracking-wider ${textSize} text-rail-text`}>
+              RAIL<span className="text-rail-teal">KUSHAL</span>
             </span>
-            <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-[#163B5C] text-[#38BDF8] border border-[#244B6A]">
+            <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-rail-elevated text-rail-cyan border border-rail-border">
               PUNE
             </span>
           </div>
-          <span className="text-[10px] text-[#A7C1D4] font-medium tracking-wide">
+          <span className="text-[10px] text-rail-secondary font-medium tracking-wide">
             Central Railway · AI Block Planning
           </span>
         </div>

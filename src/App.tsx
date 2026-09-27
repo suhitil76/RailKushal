@@ -185,7 +185,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#071626] flex text-[#E6F4F1] font-sans">
+    <div className="min-h-screen bg-rail-bg flex text-rail-text font-sans">
       {/* Sidebar Navigation */}
       <Sidebar
         currentPath={currentPath}
@@ -211,7 +211,7 @@ export const App: React.FC = () => {
       {/* Floating RailSaarthi AI Trigger Button (Bottom Right) */}
       <button
         onClick={() => setIsRailSaarthiOpen(true)}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-[#20C6B7] to-[#38BDF8] text-[#071626] font-extrabold text-xs shadow-2xl shadow-cyan-950/60 hover:scale-105 transition-all animate-bounce"
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-[#20C6B7] to-[#38BDF8] text-white font-extrabold text-xs shadow-2xl shadow-cyan-950/60 hover:scale-105 transition-all animate-bounce"
         title="RailSaarthi AI Assistant"
       >
         <Bot className="w-5 h-5" />

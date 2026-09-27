@@ -47,21 +47,21 @@ export const ToastContainer: React.FC = () => {
       {toasts.map(t => (
         <div 
           key={t.id}
-          className="pointer-events-auto flex items-start gap-3 p-3.5 rounded-lg border shadow-xl bg-[#0B1F33] text-[#E6F4F1] border-[#244B6A] transition-all animate-in fade-in slide-in-from-bottom-2"
+          className="pointer-events-auto flex items-start gap-3 p-3.5 rounded-lg border shadow-xl bg-rail-deep text-rail-text border-rail-border transition-all animate-in fade-in slide-in-from-bottom-2"
         >
           <div className="mt-0.5">
-            {t.type === 'success' && <CheckCircle2 className="w-5 h-5 text-[#34D399]" />}
-            {t.type === 'warning' && <AlertTriangle className="w-5 h-5 text-[#F4B942]" />}
-            {t.type === 'error' && <AlertCircle className="w-5 h-5 text-[#F05252]" />}
-            {t.type === 'info' && <Info className="w-5 h-5 text-[#38BDF8]" />}
+            {t.type === 'success' && <CheckCircle2 className="w-5 h-5 text-rail-emerald" />}
+            {t.type === 'warning' && <AlertTriangle className="w-5 h-5 text-rail-amber" />}
+            {t.type === 'error' && <AlertCircle className="w-5 h-5 text-rail-coral" />}
+            {t.type === 'info' && <Info className="w-5 h-5 text-rail-cyan" />}
           </div>
           <div className="flex-1 text-sm">
-            <h4 className="font-semibold text-[#E6F4F1]">{t.title}</h4>
-            {t.message && <p className="text-xs text-[#A7C1D4] mt-0.5 leading-relaxed">{t.message}</p>}
+            <h4 className="font-semibold text-rail-text">{t.title}</h4>
+            {t.message && <p className="text-xs text-rail-secondary mt-0.5 leading-relaxed">{t.message}</p>}
           </div>
           <button 
             onClick={() => setToasts(prev => prev.filter(item => item.id !== t.id))}
-            className="text-[#6E8AA3] hover:text-[#E6F4F1] p-1 rounded"
+            className="text-rail-muted hover:text-rail-text p-1 rounded"
           >
             <X className="w-4 h-4" />
           </button>

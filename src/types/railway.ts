@@ -26,6 +26,7 @@ export interface Station {
   name: string;
   latitude: number;
   longitude: number;
+  zone: string;
   division: string;
   routeKm: number;
   isMajor: boolean;
@@ -36,6 +37,8 @@ export interface Section {
   id: string;
   code: string;
   name: string;
+  zone: string;
+  division: string;
   fromStationId: string;
   toStationId: string;
   lengthKm: number;

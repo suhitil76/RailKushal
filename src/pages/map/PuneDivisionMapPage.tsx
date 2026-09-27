@@ -1,439 +1,352 @@
-import React, { useState, useRef, useMemo } from 'react';
-import { 
-  Search, ZoomIn, ZoomOut, Maximize2, Layers, MapPin, 
-  AlertTriangle, ShieldCheck, CloudRain, Cpu, ArrowRight, X, 
-  Zap, Wrench, Radio, Calendar, Info, RefreshCw 
+import React, { useState } from 'react';
+import {
+  Search, Cpu, X, ZoomIn, ZoomOut, Maximize2
 } from 'lucide-react';
 import { store } from '../../services/store';
-import { Station, Section, Asset, MaintenanceTask, BlockPlan } from '../../types/railway';
+import { Station, Section, MaintenanceTask } from '../../types/railway';
+import { MapContainer, TileLayer, Marker, Polyline, Tooltip as LeafletTooltip, useMap } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+// Fix Leaflet default icon paths
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
+
+const createCircleIcon = (color: string, size = 14) =>
+  L.divIcon({
+    className: 'custom-icon',
+    html: `<div style="background-color:${color};width:${size}px;height:${size}px;border-radius:50%;border:2px solid white;box-shadow:0 0 4px rgba(0,0,0,0.4);"></div>`,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+  });
+
+const majorStationIcon = createCircleIcon('#0F766E', 16);
+const minorStationIcon = createCircleIcon('#0369A1', 10);
+const defectIcon = L.divIcon({
+  className: 'custom-icon',
+  html: `<div style="background-color:#B91C1C;width:18px;height:18px;border-radius:50%;border:2.5px solid white;box-shadow:0 0 8px rgba(185,28,28,0.8);animation:pulse 2s infinite;"></div>`,
+  iconSize: [18, 18],
+  iconAnchor: [9, 9],
+});
+const allIndiaStationIcon = createCircleIcon('#1769AA', 14);
 
 interface PuneDivisionMapPageProps {
   onNavigate: (path: string) => void;
 }
 
+// Re-centre map when scope changes
+const MapReCenter = ({ viewScope }: { viewScope: 'PUNE' | 'ALL_INDIA' }) => {
+  const map = useMap();
+  React.useEffect(() => {
+    if (viewScope === 'PUNE') {
+      map.flyTo([18.52, 73.87], 9);
+    } else {
+      map.flyTo([22.5, 80.0], 5);
+    }
+  }, [viewScope, map]);
+  return null;
+};
+
 export const PuneDivisionMapPage: React.FC<PuneDivisionMapPageProps> = ({ onNavigate }) => {
   const state = store.getState();
-  const { stations, sections, assets, tasks, blockPlans, weather } = state;
+  const { stations, sections, tasks, blockPlans } = state;
 
-  // Search & Filters
   const [searchQuery, setSearchQuery] = useState('');
+  const [viewScope, setViewScope] = useState<'PUNE' | 'ALL_INDIA'>('PUNE');
   const [activeLayers, setActiveLayers] = useState({
     stations: true,
     corridors: true,
     defects: true,
     blocks: true,
-    weather: true,
-    density: true
   });
-  const [departmentFilter, setDepartmentFilter] = useState<'ALL' | 'ENGINEERING' | 'TRD' | 'S_AND_T'>('ALL');
-
-  // Selected Elements
   const [selectedStation, setSelectedStation] = useState<Station | null>(null);
   const [selectedSection, setSelectedSection] = useState<Section | null>(null);
 
-  // Pan & Zoom State
-  const [zoom, setZoom] = useState(1);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStart = useRef({ x: 0, y: 0 });
+  // Filter stations depending on view scope
+  const visibleStations = stations.filter(stn => {
+    if (viewScope === 'PUNE') {
+      return stn.division === 'PUNE' || stn.division === 'Pune';
+    }
+    return true; // All India shows everything
+  });
 
-  // Geo-Projection helpers (Pune Division bounds)
-  // Lat: 16.5 to 18.9, Lng: 73.2 to 74.8
-  const minLat = 16.5, maxLat = 18.9;
-  const minLng = 73.2, maxLng = 74.8;
-  const width = 1100, height = 800;
+  // Filter sections for Pune only
+  const visibleSections = sections; // sections only have Pune data
 
-  const project = (lat: number, lng: number) => {
-    const x = ((lng - minLng) / (maxLng - minLng)) * (width - 160) + 80;
-    // Invert Y because latitude increases northward
-    const y = ((maxLat - lat) / (maxLat - minLat)) * (height - 160) + 80;
-    return { x, y };
-  };
-
-  // Search Filter Highlights
-  const searchResults = useMemo(() => {
-    if (!searchQuery.trim()) return null;
-    const q = searchQuery.toLowerCase().trim();
-    const matchedStn = stations.find(s => s.code.toLowerCase().includes(q) || s.name.toLowerCase().includes(q));
-    const matchedSec = sections.find(s => s.code.toLowerCase().includes(q) || s.name.toLowerCase().includes(q));
-    const matchedTask = tasks.find(t => t.taskCode.toLowerCase().includes(q) || t.title.toLowerCase().includes(q));
-    return { matchedStn, matchedSec, matchedTask };
-  }, [searchQuery, stations, sections, tasks]);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    dragStart.current = { x: e.clientX - pan.x, y: e.clientY - pan.y };
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    setPan({ x: e.clientX - dragStart.current.x, y: e.clientY - dragStart.current.y });
-  };
-
-  const handleMouseUp = () => setIsDragging(false);
-
-  const resetView = () => {
-    setZoom(1);
-    setPan({ x: 0, y: 0 });
-  };
-
-  const toggleLayer = (layer: keyof typeof activeLayers) => {
-    setActiveLayers(prev => ({ ...prev, [layer]: !prev[layer] }));
-  };
+  const toggleLayer = (key: keyof typeof activeLayers) =>
+    setActiveLayers(prev => ({ ...prev, [key]: !prev[key] }));
 
   return (
-    <div className="relative w-full h-[calc(100vh-60px)] bg-[#071626] overflow-hidden flex select-none">
-      {/* Map Canvas / SVG Area */}
-      <div 
-        className="flex-1 h-full relative cursor-grab active:cursor-grabbing bg-rail-pattern"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-      >
-        {/* Top Control Bar */}
-        <div className="absolute top-4 left-4 z-20 flex flex-wrap items-center gap-2.5 max-w-2xl">
-          {/* Search Box */}
-          <div className="relative min-w-[280px]">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6E8AA3]" />
+    <div className="relative w-full h-[calc(100vh-60px)] bg-rail-bg overflow-hidden flex select-none">
+      {/* Map */}
+      <div className="flex-1 h-full relative z-0">
+        <MapContainer
+          center={[18.52, 73.87]}
+          zoom={9}
+          style={{ height: '100%', width: '100%' }}
+          zoomControl={false}
+        >
+          <MapReCenter viewScope={viewScope} />
+
+          {/* Basemap – CartoDB Voyager (clean, professional) */}
+          <TileLayer
+            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+            maxZoom={19}
+          />
+
+          {/* Section Polylines */}
+          {activeLayers.corridors && visibleSections.map(sec => {
+            const fromStn = stations.find(s => s.id === sec.fromStationId);
+            const toStn = stations.find(s => s.id === sec.toStationId);
+            if (!fromStn || !toStn) return null;
+
+            const isSelected = selectedSection?.id === sec.id;
+            const hasDefects = tasks.some(t => t.sectionId === sec.id && t.severity === 'CRITICAL' && t.status !== 'COMPLETED');
+            const hasBlock = activeLayers.blocks && blockPlans.some(b => b.sectionId === sec.id && (b.status === 'APPROVED' || b.status === 'PUBLISHED'));
+            const isVeryHigh = sec.trafficDensity === 'VERY_HIGH';
+
+            const color = hasBlock ? '#059669' : hasDefects ? '#B91C1C' : isVeryHigh ? '#0369A1' : '#0F766E';
+
+            return (
+              <Polyline
+                key={sec.id}
+                positions={[[fromStn.latitude, fromStn.longitude], [toStn.latitude, toStn.longitude]]}
+                pathOptions={{
+                  color: isSelected ? '#D97706' : color,
+                  weight: isSelected ? 7 : (isVeryHigh ? 5 : 3),
+                  opacity: 0.85,
+                  dashArray: sec.electrified ? undefined : '6 4',
+                }}
+                eventHandlers={{ click: () => { setSelectedSection(sec); setSelectedStation(null); } }}
+              >
+                <LeafletTooltip sticky>
+                  <b>{sec.name}</b> · {sec.lengthKm} km · {sec.trafficDensity}
+                </LeafletTooltip>
+              </Polyline>
+            );
+          })}
+
+          {/* Critical Defect Markers */}
+          {activeLayers.defects && (
+            <MarkerClusterGroup chunkedLoading maxClusterRadius={50}>
+              {tasks.filter(t => t.severity === 'CRITICAL' && t.status !== 'COMPLETED').map(t => {
+                const sec = sections.find(s => s.id === t.sectionId);
+                if (!sec) return null;
+                const fromStn = stations.find(s => s.id === sec.fromStationId);
+                const toStn = stations.find(s => s.id === sec.toStationId);
+                if (!fromStn || !toStn) return null;
+                const lat = (fromStn.latitude + toStn.latitude) / 2 + (Math.random() - 0.5) * 0.01;
+                const lng = (fromStn.longitude + toStn.longitude) / 2 + (Math.random() - 0.5) * 0.01;
+                return (
+                  <Marker key={t.id} position={[lat, lng]} icon={defectIcon}
+                    eventHandlers={{ click: () => { setSelectedSection(sec); setSelectedStation(null); } }}>
+                    <LeafletTooltip direction="top">
+                      <b>⚠ CRITICAL: {t.taskCode}</b><br />
+                      <span style={{ fontSize: 11 }}>{t.title.slice(0, 60)}...</span>
+                    </LeafletTooltip>
+                  </Marker>
+                );
+              })}
+            </MarkerClusterGroup>
+          )}
+
+          {/* Station Markers */}
+          {activeLayers.stations && (
+            <MarkerClusterGroup chunkedLoading maxClusterRadius={30}>
+              {visibleStations.map(stn => {
+                const isAllIndia = stn.division !== 'PUNE' && stn.division !== 'Pune';
+                return (
+                  <Marker
+                    key={stn.id}
+                    position={[stn.latitude, stn.longitude]}
+                    icon={isAllIndia ? allIndiaStationIcon : (stn.isMajor ? majorStationIcon : minorStationIcon)}
+                    eventHandlers={{ click: () => { setSelectedStation(stn); setSelectedSection(null); } }}
+                  >
+                    <LeafletTooltip direction="top" offset={[0, -8]}>
+                      <b>{stn.name} ({stn.code})</b><br />
+                      <span style={{ fontSize: 11 }}>{stn.zone} · {stn.division} Div · {stn.tracks} lines</span>
+                    </LeafletTooltip>
+                  </Marker>
+                );
+              })}
+            </MarkerClusterGroup>
+          )}
+        </MapContainer>
+
+        {/* ─── FLOATING TOP TOOLBAR ─── */}
+        <div className="absolute top-4 left-4 z-[400] flex flex-wrap items-center gap-2">
+          {/* Scope Toggle */}
+          <div className="flex bg-white/95 backdrop-blur border border-rail-border rounded-xl p-1 shadow-lg">
+            <button
+              onClick={() => setViewScope('PUNE')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                viewScope === 'PUNE' ? 'bg-rail-teal text-white' : 'text-rail-secondary hover:text-rail-text'
+              }`}
+            >
+              Pune Division
+            </button>
+            <button
+              onClick={() => setViewScope('ALL_INDIA')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                viewScope === 'ALL_INDIA' ? 'bg-rail-teal text-white' : 'text-rail-secondary hover:text-rail-text'
+              }`}
+            >
+              All India
+            </button>
+          </div>
+
+          {/* Search */}
+          <div className="relative min-w-[260px]">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-rail-muted" />
             <input
               type="text"
-              placeholder="Search station (PUNE, LNL), section (CCH-AKRD), task (ENG-104)..."
+              placeholder="Search station, section, task..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full bg-[#0B1F33]/90 backdrop-blur border border-[#244B6A] rounded-xl pl-9 pr-3.5 py-2 text-xs text-[#E6F4F1] placeholder-[#6E8AA3] focus:outline-none focus:border-[#20C6B7] shadow-xl"
+              className="w-full bg-white/95 backdrop-blur border border-rail-border rounded-xl pl-9 pr-3 py-1.5 text-xs text-rail-text focus:outline-none focus:border-rail-teal shadow-md"
             />
           </div>
-
-          {/* Department Filter */}
-          <select
-            value={departmentFilter}
-            onChange={e => setDepartmentFilter(e.target.value as any)}
-            className="bg-[#0B1F33]/90 backdrop-blur border border-[#244B6A] rounded-xl px-3 py-2 text-xs text-[#E6F4F1] focus:border-[#20C6B7] shadow-xl"
-          >
-            <option value="ALL">All Departments</option>
-            <option value="ENGINEERING">Engineering</option>
-            <option value="TRD">TRD (Electrical)</option>
-            <option value="S_AND_T">S&T (Signals)</option>
-          </select>
         </div>
 
-        {/* Map Legend Overlay (Top Right) */}
-        <div className="absolute top-4 right-4 z-20 p-3 rounded-xl bg-[#0B1F33]/90 backdrop-blur border border-[#244B6A] shadow-xl text-[11px] space-y-2 hidden md:block">
-          <div className="font-bold text-xs text-[#E6F4F1] mb-1">Network Legend</div>
-          <div className="flex items-center gap-2 text-[#A7C1D4]">
-            <span className="w-3 h-1 bg-[#20C6B7] rounded" /> Trunk Rail Corridor
-          </div>
-          <div className="flex items-center gap-2 text-[#A7C1D4]">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#38BDF8] border border-[#20C6B7]" /> Major Station Junction
-          </div>
-          <div className="flex items-center gap-2 text-[#A7C1D4]">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#F05252] animate-ping" /> Critical Defect Marker
-          </div>
-          <div className="flex items-center gap-2 text-[#A7C1D4]">
-            <span className="w-3 h-1 bg-[#34D399] rounded" /> Approved Maintenance Block
-          </div>
+        {/* ─── LAYER TOGGLES ─── */}
+        <div className="absolute top-4 right-4 z-[400] bg-white/95 backdrop-blur border border-rail-border rounded-xl p-3 shadow-lg text-xs space-y-2 min-w-[160px]">
+          <div className="font-bold text-rail-text mb-1">Map Layers</div>
+          {(['stations', 'corridors', 'defects', 'blocks'] as const).map(layer => (
+            <label key={layer} className="flex items-center gap-2 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={activeLayers[layer]}
+                onChange={() => toggleLayer(layer)}
+                className="accent-rail-teal"
+              />
+              <span className="capitalize text-rail-secondary">{layer === 'defects' ? 'Critical Defects' : layer === 'blocks' ? 'Approved Blocks' : layer}</span>
+            </label>
+          ))}
         </div>
 
-        {/* Zoom & Navigation Controls (Bottom Left) */}
-        <div className="absolute bottom-6 left-6 z-20 flex flex-col gap-2">
-          <button
-            onClick={() => setZoom(z => Math.min(2.5, z + 0.25))}
-            className="p-2.5 rounded-xl bg-[#0B1F33] border border-[#244B6A] text-[#A7C1D4] hover:text-[#E6F4F1] hover:border-[#20C6B7] shadow-lg transition-colors"
-            title="Zoom In"
-          >
-            <ZoomIn className="w-4 h-4" />
-          </button>
-          <button
-            onClick={() => setZoom(z => Math.max(0.6, z - 0.25))}
-            className="p-2.5 rounded-xl bg-[#0B1F33] border border-[#244B6A] text-[#A7C1D4] hover:text-[#E6F4F1] hover:border-[#20C6B7] shadow-lg transition-colors"
-            title="Zoom Out"
-          >
-            <ZoomOut className="w-4 h-4" />
-          </button>
-          <button
-            onClick={resetView}
-            className="p-2.5 rounded-xl bg-[#0B1F33] border border-[#244B6A] text-[#A7C1D4] hover:text-[#E6F4F1] hover:border-[#20C6B7] shadow-lg transition-colors"
-            title="Fit Pune Division"
-          >
-            <Maximize2 className="w-4 h-4" />
-          </button>
+        {/* ─── LEGEND ─── */}
+        <div className="absolute bottom-8 left-4 z-[400] bg-white/95 backdrop-blur border border-rail-border rounded-xl p-3 shadow-lg text-[11px] space-y-1.5 hidden md:block">
+          <div className="font-bold text-xs text-rail-text mb-2">Network Legend</div>
+          <div className="flex items-center gap-2 text-rail-secondary"><span className="w-5 h-1.5 rounded bg-[#0F766E] inline-block" /> Trunk Corridor</div>
+          <div className="flex items-center gap-2 text-rail-secondary"><span className="w-5 h-1.5 rounded bg-[#0369A1] inline-block" /> Very High Traffic</div>
+          <div className="flex items-center gap-2 text-rail-secondary"><span className="w-5 h-1.5 rounded bg-[#B91C1C] inline-block" /> Critical Defect</div>
+          <div className="flex items-center gap-2 text-rail-secondary"><span className="w-5 h-1.5 rounded bg-[#059669] inline-block" /> Approved Block</div>
+          <div className="mt-2 pt-2 border-t border-rail-border font-bold text-xs text-rail-text">Stations</div>
+          <div className="flex items-center gap-2 text-rail-secondary"><span className="w-4 h-4 rounded-full bg-[#0F766E] border-2 border-white inline-block shadow" /> Major Junction</div>
+          <div className="flex items-center gap-2 text-rail-secondary"><span className="w-2.5 h-2.5 rounded-full bg-[#0369A1] border-2 border-white inline-block shadow" /> Station</div>
+          <div className="flex items-center gap-2 text-rail-secondary"><span className="w-4 h-4 rounded-full bg-[#B91C1C] border-2 border-white inline-block shadow" /> ⚠ Critical Risk</div>
         </div>
 
-        {/* Interactive SVG Network */}
-        <svg 
-          width="100%" 
-          height="100%" 
-          viewBox={`0 0 ${width} ${height}`}
-          className="w-full h-full"
-        >
-          <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>
-            {/* 1. Track Corridor Lines (Sections) */}
-            {activeLayers.corridors && sections.map(sec => {
-              const fromStn = stations.find(s => s.id === sec.fromStationId);
-              const toStn = stations.find(s => s.id === sec.toStationId);
-              if (!fromStn || !toStn) return null;
-
-              const p1 = project(fromStn.latitude, fromStn.longitude);
-              const p2 = project(toStn.latitude, toStn.longitude);
-
-              const isSelected = selectedSection?.id === sec.id;
-              const isHighDensity = sec.trafficDensity === 'VERY_HIGH';
-              const hasDefects = tasks.some(t => t.sectionId === sec.id && t.severity === 'CRITICAL');
-              const hasApprovedBlock = blockPlans.some(b => b.sectionId === sec.id && (b.status === 'APPROVED' || b.status === 'PUBLISHED'));
-
-              return (
-                <g 
-                  key={sec.id}
-                  onClick={() => {
-                    setSelectedSection(sec);
-                    setSelectedStation(null);
-                  }}
-                  className="cursor-pointer group"
-                >
-                  {/* Invisible wide hit area */}
-                  <line 
-                    x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} 
-                    stroke="transparent" 
-                    strokeWidth="16" 
-                  />
-
-                  {/* Outer Glow for selected or critical */}
-                  {isSelected && (
-                    <line 
-                      x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} 
-                      stroke="#20C6B7" 
-                      strokeWidth="8" 
-                      strokeOpacity="0.5" 
-                      className="animate-pulse"
-                    />
-                  )}
-
-                  {/* Railway track line */}
-                  <line 
-                    x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y} 
-                    stroke={
-                      hasApprovedBlock ? '#34D399' :
-                      hasDefects ? '#F05252' :
-                      isHighDensity ? '#38BDF8' : '#20C6B7'
-                    }
-                    strokeWidth={isHighDensity ? 4.5 : 3}
-                    strokeDasharray={sec.electrified ? undefined : '5 3'}
-                    strokeLinecap="round"
-                    className="transition-all group-hover:stroke-[#20C6B7] group-hover:stroke-width-6"
-                  />
-
-                  {/* Section Label (midpoint) */}
-                  <text
-                    x={(p1.x + p2.x) / 2}
-                    y={(p1.y + p2.y) / 2 - 8}
-                    fill="#A7C1D4"
-                    fontSize="9"
-                    fontFamily="monospace"
-                    textAnchor="middle"
-                    className="opacity-0 group-hover:opacity-100 transition-opacity bg-black"
-                  >
-                    {sec.code} ({sec.lengthKm}km)
-                  </text>
-                </g>
-              );
-            })}
-
-            {/* 2. Critical Defect Pins */}
-            {activeLayers.defects && tasks.filter(t => t.severity === 'CRITICAL' && t.status !== 'COMPLETED').map(t => {
-              const sec = sections.find(s => s.id === t.sectionId);
-              if (!sec) return null;
-              const fromStn = stations.find(s => s.id === sec.fromStationId);
-              const toStn = stations.find(s => s.id === sec.toStationId);
-              if (!fromStn || !toStn) return null;
-
-              const p1 = project(fromStn.latitude, fromStn.longitude);
-              const p2 = project(toStn.latitude, toStn.longitude);
-              const midX = (p1.x + p2.x) / 2 + 5;
-              const midY = (p1.y + p2.y) / 2 - 5;
-
-              return (
-                <g key={t.id} className="cursor-pointer" onClick={() => setSelectedSection(sec)}>
-                  <circle cx={midX} cy={midY} r="6" fill="#F05252" className="animate-ping" opacity="0.7" />
-                  <circle cx={midX} cy={midY} r="4" fill="#F05252" stroke="#071626" strokeWidth="1.5" />
-                </g>
-              );
-            })}
-
-            {/* 3. Station Nodes */}
-            {activeLayers.stations && stations.map(stn => {
-              const pos = project(stn.latitude, stn.longitude);
-              const isSelected = selectedStation?.id === stn.id;
-              const isMajor = stn.isMajor;
-
-              return (
-                <g
-                  key={stn.id}
-                  onClick={() => {
-                    setSelectedStation(stn);
-                    setSelectedSection(null);
-                  }}
-                  className="cursor-pointer group"
-                >
-                  {/* Station Node Ring */}
-                  {isSelected && (
-                    <circle 
-                      cx={pos.x} cy={pos.y} 
-                      r={isMajor ? 14 : 10} 
-                      fill="none" 
-                      stroke="#20C6B7" 
-                      strokeWidth="2.5" 
-                      className="animate-pulse" 
-                    />
-                  )}
-
-                  {/* Base Circle */}
-                  <circle
-                    cx={pos.x} cy={pos.y}
-                    r={isMajor ? 7 : 4.5}
-                    fill={isMajor ? '#38BDF8' : '#0B1F33'}
-                    stroke={isSelected ? '#20C6B7' : '#244B6A'}
-                    strokeWidth={isMajor ? 2.5 : 1.5}
-                    className="transition-transform group-hover:scale-125"
-                  />
-
-                  {/* Station Code Label */}
-                  <text
-                    x={pos.x}
-                    y={pos.y + (isMajor ? 17 : 13)}
-                    fill={isSelected ? '#20C6B7' : isMajor ? '#E6F4F1' : '#A7C1D4'}
-                    fontSize={isMajor ? '11' : '9'}
-                    fontWeight={isMajor ? 'bold' : 'normal'}
-                    fontFamily="monospace"
-                    textAnchor="middle"
-                    className="select-none"
-                  >
-                    {stn.code}
-                  </text>
-                </g>
-              );
-            })}
-          </g>
-        </svg>
-
-        {/* Disclaimer Bar (Bottom Right) */}
-        <div className="absolute bottom-4 right-4 z-20 px-3 py-1 rounded-lg bg-[#0B1F33]/80 backdrop-blur border border-[#244B6A] text-[10px] text-[#6E8AA3]">
-          Demo network representation for Pune Division. Verify operational geography and safety constraints before production use.
+        {/* Disclaimer */}
+        <div className="absolute bottom-3 right-3 z-[400] px-2.5 py-1 rounded-lg bg-white/80 border border-rail-border text-[10px] text-rail-muted">
+          {viewScope === 'PUNE' ? 'Pune Division Demo Geometry' : 'All India — Representative Synthetic Locations'} · Verify before operational use
         </div>
       </div>
 
-      {/* Slide-in Detailed Drawer (Right Side) for Station or Section */}
+      {/* ─── SIDE DRAWER ─── */}
       {(selectedStation || selectedSection) && (
-        <div className="w-96 bg-[#0B1F33] border-l border-[#244B6A] h-full overflow-y-auto p-5 shadow-2xl z-30 animate-in slide-in-from-right flex flex-col justify-between">
-          <div>
-            {/* Drawer Close Button */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#244B6A]">
-              <span className="text-[10px] font-mono text-[#20C6B7] uppercase tracking-wider font-bold">
-                {selectedStation ? 'Station Telemetry' : 'Corridor Section Details'}
-              </span>
-              <button 
-                onClick={() => { setSelectedStation(null); setSelectedSection(null); }}
-                className="p-1 rounded text-[#6E8AA3] hover:text-[#E6F4F1]"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
+        <div className="w-80 bg-white border-l border-rail-border h-full overflow-y-auto shadow-xl z-[500] flex flex-col">
+          <div className="p-4 border-b border-rail-border flex items-center justify-between">
+            <span className="text-[11px] font-mono text-rail-teal uppercase tracking-wider font-bold">
+              {selectedStation ? 'Station Details' : 'Corridor Section'}
+            </span>
+            <button onClick={() => { setSelectedStation(null); setSelectedSection(null); }} className="p-1 rounded text-rail-muted hover:text-rail-coral">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
 
-            {/* Station Drawer Content */}
+          <div className="p-4 flex-1">
+            {/* Station panel */}
             {selectedStation && (
-              <div className="mt-4 space-y-4">
+              <div className="space-y-4">
                 <div>
-                  <h2 className="text-base font-bold text-[#E6F4F1]">{selectedStation.name}</h2>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#102A43] text-[#38BDF8] border border-[#244B6A]">
+                  <h2 className="text-sm font-bold text-rail-text">{selectedStation.name}</h2>
+                  <div className="flex flex-wrap gap-1.5 mt-1.5">
+                    <span className="font-mono text-xs px-2 py-0.5 rounded-full bg-rail-teal/10 text-rail-teal border border-rail-teal/30">
                       {selectedStation.code}
                     </span>
-                    <span className="text-xs text-[#A7C1D4]">Route Km: {selectedStation.routeKm}</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                      {selectedStation.zone}
+                    </span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-rail-deep/10 text-rail-secondary border border-rail-border">
+                      {selectedStation.division} Div
+                    </span>
                   </div>
                 </div>
-
-                <div className="p-3.5 rounded-xl bg-[#071626] border border-[#244B6A] text-xs space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-[#6E8AA3]">Tracks:</span>
-                    <span className="font-mono text-[#E6F4F1]">{selectedStation.tracks} Running Lines</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#6E8AA3]">Coordinates:</span>
-                    <span className="font-mono text-[#A7C1D4]">{selectedStation.latitude.toFixed(4)}, {selectedStation.longitude.toFixed(4)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#6E8AA3]">Status:</span>
-                    <span className="text-[#34D399] font-bold">Operational (Normal Traffic)</span>
-                  </div>
+                <div className="rounded-xl bg-rail-bg border border-rail-border p-3 text-xs space-y-2">
+                  <div className="flex justify-between"><span className="text-rail-muted">Running Lines</span><span className="font-mono font-bold">{selectedStation.tracks}</span></div>
+                  <div className="flex justify-between"><span className="text-rail-muted">Route Km</span><span className="font-mono">{selectedStation.routeKm}</span></div>
+                  <div className="flex justify-between"><span className="text-rail-muted">Type</span><span className={selectedStation.isMajor ? 'text-rail-teal font-bold' : 'text-rail-secondary'}>{selectedStation.isMajor ? 'Major Junction' : 'Intermediate Station'}</span></div>
+                  <div className="flex justify-between"><span className="text-rail-muted">Coordinates</span><span className="font-mono text-rail-secondary">{selectedStation.latitude.toFixed(4)}, {selectedStation.longitude.toFixed(4)}</span></div>
                 </div>
-
                 <div>
-                  <h3 className="text-xs font-bold text-[#E6F4F1] uppercase tracking-wider mb-2">
-                    Nearby Maintenance Demands
-                  </h3>
-                  {tasks.filter(t => t.sectionId.includes(selectedStation.id.slice(4))).slice(0, 3).map(t => (
-                    <div key={t.id} className="p-2.5 rounded-lg bg-[#071626] border border-[#244B6A] mb-2 text-xs">
-                      <span className="font-mono text-[#38BDF8] font-bold">{t.taskCode}</span>
-                      <p className="text-[#E6F4F1] truncate mt-0.5">{t.title}</p>
+                  <h3 className="text-xs font-bold text-rail-text uppercase tracking-wider mb-2">Nearby Tasks</h3>
+                  {tasks.filter(t => t.sectionId && sections.find(s => s.id === t.sectionId && (s.fromStationId === selectedStation.id || s.toStationId === selectedStation.id))).slice(0, 3).map(t => (
+                    <div key={t.id} className="p-2 rounded-lg bg-rail-bg border border-rail-border mb-1.5 text-xs">
+                      <span className="font-mono text-rail-cyan font-bold">{t.taskCode}</span>
+                      <p className="text-rail-text truncate mt-0.5">{t.title}</p>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Section Drawer Content */}
+            {/* Section panel */}
             {selectedSection && (
-              <div className="mt-4 space-y-4">
+              <div className="space-y-4">
                 <div>
-                  <h2 className="text-base font-bold text-[#E6F4F1]">{selectedSection.name}</h2>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#102A43] text-[#20C6B7] border border-[#244B6A]">
+                  <h2 className="text-sm font-bold text-rail-text">{selectedSection.name}</h2>
+                  <div className="flex flex-wrap gap-1.5 mt-1.5">
+                    <span className="font-mono text-xs px-2 py-0.5 rounded-full bg-rail-teal/10 text-rail-teal border border-rail-teal/30">
                       {selectedSection.code}
                     </span>
-                    <span className="text-xs text-[#A7C1D4]">{selectedSection.lengthKm} Kilometers</span>
+                    <span className={`text-xs px-2 py-0.5 rounded-full border font-bold ${
+                      selectedSection.trafficDensity === 'VERY_HIGH' ? 'bg-red-50 text-red-700 border-red-200' :
+                      selectedSection.trafficDensity === 'HIGH' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                      'bg-green-50 text-green-700 border-green-200'
+                    }`}>
+                      {selectedSection.trafficDensity}
+                    </span>
                   </div>
                 </div>
-
-                <div className="p-3.5 rounded-xl bg-[#071626] border border-[#244B6A] text-xs space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-[#6E8AA3]">Line Configuration:</span>
-                    <span className="font-mono text-[#E6F4F1]">{selectedSection.lineCount} Lines · Electrified 25kV</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#6E8AA3]">Traffic Density:</span>
-                    <span className="text-[#F4B942] font-bold">{selectedSection.trafficDensity}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#6E8AA3]">Stipulated Window:</span>
-                    <span className="font-mono text-[#34D399]">01:30 - 04:30 (Night Corridor)</span>
-                  </div>
+                <div className="rounded-xl bg-rail-bg border border-rail-border p-3 text-xs space-y-2">
+                  <div className="flex justify-between"><span className="text-rail-muted">Length</span><span className="font-mono font-bold">{selectedSection.lengthKm} km</span></div>
+                  <div className="flex justify-between"><span className="text-rail-muted">Lines</span><span className="font-mono">{selectedSection.lineCount}</span></div>
+                  <div className="flex justify-between"><span className="text-rail-muted">Electrified</span><span className={selectedSection.electrified ? 'text-rail-emerald font-bold' : 'text-rail-muted'}>{selectedSection.electrified ? '25kV AC' : 'No'}</span></div>
+                  <div className="flex justify-between"><span className="text-rail-muted">Stipulated Window</span><span className="font-mono text-rail-emerald">01:30 – 04:30</span></div>
                 </div>
-
                 <div>
-                  <h3 className="text-xs font-bold text-[#E6F4F1] uppercase tracking-wider mb-2">
-                    Active Critical Defects on Section
-                  </h3>
-                  {tasks.filter(t => t.sectionId === selectedSection.id).slice(0, 3).map(t => (
-                    <div key={t.id} className="p-2.5 rounded-lg bg-[#071626] border border-[#244B6A] mb-2 text-xs">
-                      <div className="flex justify-between">
-                        <span className="font-mono text-[#F05252] font-bold">{t.taskCode}</span>
-                        <span className="text-[10px] text-[#20C6B7] font-mono">AI: {t.aiPriorityScore}</span>
+                  <h3 className="text-xs font-bold text-rail-text uppercase tracking-wider mb-2">Active Defects</h3>
+                  {tasks.filter(t => t.sectionId === selectedSection.id && t.status !== 'COMPLETED').slice(0, 4).map(t => (
+                    <div key={t.id} className={`p-2 rounded-lg border mb-1.5 text-xs ${t.severity === 'CRITICAL' ? 'bg-red-50 border-red-200' : 'bg-rail-bg border-rail-border'}`}>
+                      <div className="flex justify-between items-center">
+                        <span className="font-mono font-bold text-rail-coral">{t.taskCode}</span>
+                        <span className="text-[10px] text-rail-teal font-mono">AI: {t.aiPriorityScore}</span>
                       </div>
-                      <p className="text-[#E6F4F1] truncate mt-0.5">{t.title}</p>
+                      <p className="text-rail-text truncate mt-0.5">{t.title}</p>
                     </div>
                   ))}
+                  {tasks.filter(t => t.sectionId === selectedSection.id && t.status !== 'COMPLETED').length === 0 && (
+                    <p className="text-xs text-rail-muted italic">No active defects on this section.</p>
+                  )}
                 </div>
               </div>
             )}
           </div>
 
-          {/* Drawer Footer CTA */}
-          <div className="pt-4 border-t border-[#244B6A]">
+          <div className="p-4 border-t border-rail-border">
             <button
               onClick={() => onNavigate('/blocks/planning')}
-              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#20C6B7] hover:bg-[#20C6B7]/90 text-[#071626] font-bold text-xs shadow-lg shadow-teal-950/40 transition-colors"
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-rail-teal hover:bg-rail-teal/90 text-white font-bold text-xs shadow transition-colors"
             >
               <Cpu className="w-4 h-4" />
-              <span>Open in Planning Workspace</span>
+              Open in Planning Workspace
             </button>
           </div>
         </div>

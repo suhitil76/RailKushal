@@ -73,37 +73,49 @@ export const SEED_USERS: User[] = [
 // 2. 28 PUNE DIVISION STATIONS
 // ==========================================
 export const SEED_STATIONS: Station[] = [
-  { id: 'stn-pune', code: 'PUNE', name: 'Pune Junction', latitude: 18.5289, longitude: 73.8744, division: 'Pune', routeKm: 0.0, isMajor: true, tracks: 6 },
-  { id: 'stn-svjr', code: 'SVJR', name: 'Shivajinagar', latitude: 18.5323, longitude: 73.8517, division: 'Pune', routeKm: 2.5, isMajor: true, tracks: 4 },
-  { id: 'stn-kk', code: 'KK', name: 'Khadki', latitude: 18.5636, longitude: 73.8347, division: 'Pune', routeKm: 6.2, isMajor: false, tracks: 4 },
-  { id: 'stn-dapd', code: 'DAPD', name: 'Dapodi', latitude: 18.5794, longitude: 73.8242, division: 'Pune', routeKm: 8.1, isMajor: false, tracks: 3 },
-  { id: 'stn-kswd', code: 'KSWD', name: 'Kasarwadi', latitude: 18.5991, longitude: 73.8164, division: 'Pune', routeKm: 11.4, isMajor: false, tracks: 3 },
-  { id: 'stn-pmp', code: 'PMP', name: 'Pimpri', latitude: 18.6234, longitude: 73.8012, division: 'Pune', routeKm: 14.2, isMajor: true, tracks: 4 },
-  { id: 'stn-cch', code: 'CCH', name: 'Chinchwad', latitude: 18.6367, longitude: 73.7885, division: 'Pune', routeKm: 16.5, isMajor: true, tracks: 4 },
-  { id: 'stn-akrd', code: 'AKRD', name: 'Akurdi', latitude: 18.6521, longitude: 73.7663, division: 'Pune', routeKm: 19.8, isMajor: false, tracks: 3 },
-  { id: 'stn-dehr', code: 'DEHR', name: 'Dehu Road', latitude: 18.6806, longitude: 73.7314, division: 'Pune', routeKm: 24.6, isMajor: true, tracks: 4 },
-  { id: 'stn-bgwi', code: 'BGWI', name: 'Begdewadi', latitude: 18.7011, longitude: 73.7122, division: 'Pune', routeKm: 28.0, isMajor: false, tracks: 2 },
-  { id: 'stn-grwd', code: 'GRWD', name: 'Ghorawadi', latitude: 18.7153, longitude: 73.6961, division: 'Pune', routeKm: 31.2, isMajor: false, tracks: 2 },
-  { id: 'stn-tgn', code: 'TGN', name: 'Talegaon', latitude: 18.7308, longitude: 73.6769, division: 'Pune', routeKm: 34.1, isMajor: true, tracks: 4 },
-  { id: 'stn-vdn', code: 'VDN', name: 'Vadgaon', latitude: 18.7492, longitude: 73.6492, division: 'Pune', routeKm: 38.0, isMajor: false, tracks: 2 },
-  { id: 'stn-knhe', code: 'KNHE', name: 'Kanhe', latitude: 18.7617, longitude: 73.6183, division: 'Pune', routeKm: 42.4, isMajor: false, tracks: 2 },
-  { id: 'stn-kmst', code: 'KMST', name: 'Kamshet', latitude: 18.7594, longitude: 73.5619, division: 'Pune', routeKm: 47.6, isMajor: false, tracks: 3 },
-  { id: 'stn-mvl', code: 'MVL', name: 'Malavli', latitude: 18.7497, longitude: 73.4739, division: 'Pune', routeKm: 55.8, isMajor: false, tracks: 3 },
-  { id: 'stn-lnl', code: 'LNL', name: 'Lonavala', latitude: 18.7519, longitude: 73.4074, division: 'Pune', routeKm: 63.7, isMajor: true, tracks: 5 },
+  { id: 'stn-pune', code: 'PUNE', name: 'Pune Junction', latitude: 18.5289, longitude: 73.8744, zone: 'CR', division: 'PUNE', routeKm: 0.0, isMajor: true, tracks: 6 },
+  { id: 'stn-svjr', code: 'SVJR', name: 'Shivajinagar', latitude: 18.5323, longitude: 73.8517, zone: 'CR', division: 'PUNE', routeKm: 2.5, isMajor: true, tracks: 4 },
+  { id: 'stn-kk', code: 'KK', name: 'Khadki', latitude: 18.5636, longitude: 73.8347, zone: 'CR', division: 'PUNE', routeKm: 6.2, isMajor: false, tracks: 4 },
+  { id: 'stn-dapd', code: 'DAPD', name: 'Dapodi', latitude: 18.5794, longitude: 73.8242, zone: 'CR', division: 'PUNE', routeKm: 8.1, isMajor: false, tracks: 3 },
+  { id: 'stn-kswd', code: 'KSWD', name: 'Kasarwadi', latitude: 18.5991, longitude: 73.8164, zone: 'CR', division: 'PUNE', routeKm: 11.4, isMajor: false, tracks: 3 },
+  { id: 'stn-pmp', code: 'PMP', name: 'Pimpri', latitude: 18.6234, longitude: 73.8012, zone: 'CR', division: 'PUNE', routeKm: 14.2, isMajor: true, tracks: 4 },
+  { id: 'stn-cch', code: 'CCH', name: 'Chinchwad', latitude: 18.6367, longitude: 73.7885, zone: 'CR', division: 'PUNE', routeKm: 16.5, isMajor: true, tracks: 4 },
+  { id: 'stn-akrd', code: 'AKRD', name: 'Akurdi', latitude: 18.6521, longitude: 73.7663, zone: 'CR', division: 'PUNE', routeKm: 19.8, isMajor: false, tracks: 3 },
+  { id: 'stn-dehr', code: 'DEHR', name: 'Dehu Road', latitude: 18.6806, longitude: 73.7314, zone: 'CR', division: 'PUNE', routeKm: 24.6, isMajor: true, tracks: 4 },
+  { id: 'stn-bgwi', code: 'BGWI', name: 'Begdewadi', latitude: 18.7011, longitude: 73.7122, zone: 'CR', division: 'PUNE', routeKm: 28.0, isMajor: false, tracks: 2 },
+  { id: 'stn-grwd', code: 'GRWD', name: 'Ghorawadi', latitude: 18.7153, longitude: 73.6961, zone: 'CR', division: 'PUNE', routeKm: 31.2, isMajor: false, tracks: 2 },
+  { id: 'stn-tgn', code: 'TGN', name: 'Talegaon', latitude: 18.7308, longitude: 73.6769, zone: 'CR', division: 'PUNE', routeKm: 34.1, isMajor: true, tracks: 4 },
+  { id: 'stn-vdn', code: 'VDN', name: 'Vadgaon', latitude: 18.7492, longitude: 73.6492, zone: 'CR', division: 'PUNE', routeKm: 38.0, isMajor: false, tracks: 2 },
+  { id: 'stn-knhe', code: 'KNHE', name: 'Kanhe', latitude: 18.7617, longitude: 73.6183, zone: 'CR', division: 'PUNE', routeKm: 42.4, isMajor: false, tracks: 2 },
+  { id: 'stn-kmst', code: 'KMST', name: 'Kamshet', latitude: 18.7594, longitude: 73.5619, zone: 'CR', division: 'PUNE', routeKm: 47.6, isMajor: false, tracks: 3 },
+  { id: 'stn-mvl', code: 'MVL', name: 'Malavli', latitude: 18.7497, longitude: 73.4739, zone: 'CR', division: 'PUNE', routeKm: 55.8, isMajor: false, tracks: 3 },
+  { id: 'stn-lnl', code: 'LNL', name: 'Lonavala', latitude: 18.7519, longitude: 73.4074, zone: 'CR', division: 'PUNE', routeKm: 63.7, isMajor: true, tracks: 5 },
   // Daund Corridor
-  { id: 'stn-hdp', code: 'HDP', name: 'Hadapsar', latitude: 18.5133, longitude: 73.9292, division: 'Pune', routeKm: 6.0, isMajor: true, tracks: 4 },
-  { id: 'stn-gpr', code: 'GPR', name: 'Ghorpuri', latitude: 18.5217, longitude: 73.8967, division: 'Pune', routeKm: 2.8, isMajor: false, tracks: 3 },
-  { id: 'stn-uri', code: 'URI', name: 'Uruli', latitude: 18.4789, longitude: 74.1283, division: 'Pune', routeKm: 29.0, isMajor: false, tracks: 3 },
-  { id: 'stn-dd', code: 'DD', name: 'Daund Junction', latitude: 18.4658, longitude: 74.5828, division: 'Pune', routeKm: 76.0, isMajor: true, tracks: 6 },
+  { id: 'stn-hdp', code: 'HDP', name: 'Hadapsar', latitude: 18.5133, longitude: 73.9292, zone: 'CR', division: 'PUNE', routeKm: 6.0, isMajor: true, tracks: 4 },
+  { id: 'stn-gpr', code: 'GPR', name: 'Ghorpuri', latitude: 18.5217, longitude: 73.8967, zone: 'CR', division: 'PUNE', routeKm: 2.8, isMajor: false, tracks: 3 },
+  { id: 'stn-uri', code: 'URI', name: 'Uruli', latitude: 18.4789, longitude: 74.1283, zone: 'CR', division: 'PUNE', routeKm: 29.0, isMajor: false, tracks: 3 },
+  { id: 'stn-dd', code: 'DD', name: 'Daund Junction', latitude: 18.4658, longitude: 74.5828, zone: 'CR', division: 'PUNE', routeKm: 76.0, isMajor: true, tracks: 6 },
   // Miraj/Kolhapur Corridor
-  { id: 'stn-jjr', code: 'JJR', name: 'Jejuri', latitude: 18.2789, longitude: 74.1561, division: 'Pune', routeKm: 58.0, isMajor: false, tracks: 3 },
-  { id: 'stn-str', code: 'STR', name: 'Satara', latitude: 17.6805, longitude: 74.0183, division: 'Pune', routeKm: 145.0, isMajor: true, tracks: 4 },
-  { id: 'stn-krg', code: 'KRG', name: 'Karad', latitude: 17.2894, longitude: 74.2008, division: 'Pune', routeKm: 204.0, isMajor: true, tracks: 3 },
-  { id: 'stn-sli', code: 'SLI', name: 'Sangli', latitude: 16.8524, longitude: 74.5815, division: 'Pune', routeKm: 272.0, isMajor: true, tracks: 3 },
-  { id: 'stn-mrj', code: 'MRJ', name: 'Miraj Junction', latitude: 16.8281, longitude: 74.6469, division: 'Pune', routeKm: 280.0, isMajor: true, tracks: 5 },
-  { id: 'stn-kop', code: 'KOP', name: 'Chhatrapati Shahu Maharaj Terminus (Kolhapur)', latitude: 16.6956, longitude: 74.2317, division: 'Pune', routeKm: 327.0, isMajor: true, tracks: 4 },
+  { id: 'stn-jjr', code: 'JJR', name: 'Jejuri', latitude: 18.2789, longitude: 74.1561, zone: 'CR', division: 'PUNE', routeKm: 58.0, isMajor: false, tracks: 3 },
+  { id: 'stn-str', code: 'STR', name: 'Satara', latitude: 17.6805, longitude: 74.0183, zone: 'CR', division: 'PUNE', routeKm: 145.0, isMajor: true, tracks: 4 },
+  { id: 'stn-krg', code: 'KRG', name: 'Karad', latitude: 17.2894, longitude: 74.2008, zone: 'CR', division: 'PUNE', routeKm: 204.0, isMajor: true, tracks: 3 },
+  { id: 'stn-sli', code: 'SLI', name: 'Sangli', latitude: 16.8524, longitude: 74.5815, zone: 'CR', division: 'PUNE', routeKm: 272.0, isMajor: true, tracks: 3 },
+  { id: 'stn-mrj', code: 'MRJ', name: 'Miraj Junction', latitude: 16.8281, longitude: 74.6469, zone: 'CR', division: 'PUNE', routeKm: 280.0, isMajor: true, tracks: 5 },
+  { id: 'stn-kop', code: 'KOP', name: 'Chhatrapati Shahu Maharaj Terminus (Kolhapur)', latitude: 16.6956, longitude: 74.2317, zone: 'CR', division: 'PUNE', routeKm: 327.0, isMajor: true, tracks: 4 },
   // Baramati Branch
-  { id: 'stn-bma', code: 'BMA', name: 'Baramati', latitude: 18.1517, longitude: 74.5772, division: 'Pune', routeKm: 118.0, isMajor: true, tracks: 3 },
+  { id: 'stn-bma', code: 'BMA', name: 'Baramati', latitude: 18.1517, longitude: 74.5772, zone: 'CR', division: 'PUNE', routeKm: 118.0, isMajor: true, tracks: 3 },
+
+  // ALL-INDIA OVERVIEW DEMO STATIONS
+  { id: 'stn-ndls', code: 'NDLS', name: 'New Delhi', latitude: 28.6428, longitude: 77.2191, zone: 'NR', division: 'DELHI', routeKm: 0, isMajor: true, tracks: 16 },
+  { id: 'stn-bct', code: 'BCT', name: 'Mumbai Central', latitude: 18.9696, longitude: 72.8194, zone: 'WR', division: 'MUMBAI', routeKm: 0, isMajor: true, tracks: 9 },
+  { id: 'stn-hwh', code: 'HWH', name: 'Howrah Junction', latitude: 22.5833, longitude: 88.3433, zone: 'ER', division: 'HOWRAH', routeKm: 0, isMajor: true, tracks: 23 },
+  { id: 'stn-mas', code: 'MAS', name: 'Chennai Central', latitude: 13.0827, longitude: 80.2707, zone: 'SR', division: 'CHENNAI', routeKm: 0, isMajor: true, tracks: 15 },
+  { id: 'stn-sbc', code: 'SBC', name: 'KSR Bengaluru', latitude: 12.9781, longitude: 77.5695, zone: 'SWR', division: 'BENGALURU', routeKm: 0, isMajor: true, tracks: 10 },
+  { id: 'stn-sc', code: 'SC', name: 'Secunderabad Junction', latitude: 17.4339, longitude: 78.5009, zone: 'SCR', division: 'SECUNDERABAD', routeKm: 0, isMajor: true, tracks: 10 },
+  { id: 'stn-gkp', code: 'GKP', name: 'Gorakhpur', latitude: 26.7645, longitude: 83.3813, zone: 'NER', division: 'LUCKNOW', routeKm: 0, isMajor: true, tracks: 10 },
+  { id: 'stn-bza', code: 'BZA', name: 'Vijayawada Junction', latitude: 16.5186, longitude: 80.6200, zone: 'SCR', division: 'VIJAYAWADA', routeKm: 0, isMajor: true, tracks: 10 },
+  { id: 'stn-r', code: 'R', name: 'Raipur Junction', latitude: 21.2580, longitude: 81.6293, zone: 'SECR', division: 'RAIPUR', routeKm: 0, isMajor: true, tracks: 7 },
+  { id: 'stn-bhopal', code: 'BPL', name: 'Bhopal Junction', latitude: 23.2676, longitude: 77.4140, zone: 'WCR', division: 'BHOPAL', routeKm: 0, isMajor: true, tracks: 6 },
 ];
 
 // ==========================================
@@ -114,6 +126,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-pune-svjr',
     code: 'PUNE-SVJR',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Pune–Shivajinagar',
     fromStationId: 'stn-pune',
     toStationId: 'stn-svjr',
@@ -126,6 +140,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-svjr-kk',
     code: 'SVJR-KK',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Shivajinagar–Khadki',
     fromStationId: 'stn-svjr',
     toStationId: 'stn-kk',
@@ -138,6 +154,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-kk-dapd',
     code: 'KK-DAPD',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Khadki–Dapodi',
     fromStationId: 'stn-kk',
     toStationId: 'stn-dapd',
@@ -150,6 +168,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-dapd-kswd',
     code: 'DAPD-KSWD',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Dapodi–Kasarwadi',
     fromStationId: 'stn-dapd',
     toStationId: 'stn-kswd',
@@ -162,6 +182,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-kswd-pmp',
     code: 'KSWD-PMP',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Kasarwadi–Pimpri',
     fromStationId: 'stn-kswd',
     toStationId: 'stn-pmp',
@@ -174,6 +196,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-pmp-cch',
     code: 'PMP-CCH',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Pimpri–Chinchwad',
     fromStationId: 'stn-pmp',
     toStationId: 'stn-cch',
@@ -186,6 +210,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-cch-akrd',
     code: 'CCH-AKRD',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Chinchwad–Akurdi',
     fromStationId: 'stn-cch',
     toStationId: 'stn-akrd',
@@ -198,6 +224,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-akrd-dehr',
     code: 'AKRD-DEHR',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Akurdi–Dehu Road',
     fromStationId: 'stn-akrd',
     toStationId: 'stn-dehr',
@@ -210,6 +238,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-dehr-bgwi',
     code: 'DEHR-BGWI',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Dehu Road–Begdewadi',
     fromStationId: 'stn-dehr',
     toStationId: 'stn-bgwi',
@@ -222,6 +252,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-bgwi-grwd',
     code: 'BGWI-GRWD',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Begdewadi–Ghorawadi',
     fromStationId: 'stn-bgwi',
     toStationId: 'stn-grwd',
@@ -234,6 +266,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-grwd-tgn',
     code: 'GRWD-TGN',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Ghorawadi–Talegaon',
     fromStationId: 'stn-grwd',
     toStationId: 'stn-tgn',
@@ -246,6 +280,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-tgn-vdn',
     code: 'TGN-VDN',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Talegaon–Vadgaon',
     fromStationId: 'stn-tgn',
     toStationId: 'stn-vdn',
@@ -258,6 +294,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-vdn-knhe',
     code: 'VDN-KNHE',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Vadgaon–Kanhe',
     fromStationId: 'stn-vdn',
     toStationId: 'stn-knhe',
@@ -270,6 +308,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-knhe-kmst',
     code: 'KNHE-KMST',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Kanhe–Kamshet',
     fromStationId: 'stn-knhe',
     toStationId: 'stn-kmst',
@@ -282,6 +322,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-kmst-mvl',
     code: 'KMST-MVL',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Kamshet–Malavli',
     fromStationId: 'stn-kmst',
     toStationId: 'stn-mvl',
@@ -294,6 +336,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-mvl-lnl',
     code: 'MVL-LNL',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Malavli–Lonavala',
     fromStationId: 'stn-mvl',
     toStationId: 'stn-lnl',
@@ -307,6 +351,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-pune-hdp',
     code: 'PUNE-HDP',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Pune–Hadapsar',
     fromStationId: 'stn-pune',
     toStationId: 'stn-hdp',
@@ -319,6 +365,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-hdp-uri',
     code: 'HDP-URI',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Hadapsar–Uruli',
     fromStationId: 'stn-hdp',
     toStationId: 'stn-uri',
@@ -331,6 +379,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-uri-dd',
     code: 'URI-DD',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Uruli–Daund',
     fromStationId: 'stn-uri',
     toStationId: 'stn-dd',
@@ -344,6 +394,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-pune-jjr',
     code: 'PUNE-JJR',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Pune–Jejuri',
     fromStationId: 'stn-pune',
     toStationId: 'stn-jjr',
@@ -356,6 +408,8 @@ export const SEED_SECTIONS: Section[] = [
   {
     id: 'sec-jjr-str',
     code: 'JJR-STR',
+    zone: 'CR',
+    division: 'PUNE',
     name: 'Jejuri–Satara',
     fromStationId: 'stn-jjr',
     toStationId: 'stn-str',
