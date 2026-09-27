@@ -106,7 +106,7 @@ export const EngineeringDashboard: React.FC<DashboardProps> = ({ onNavigate }) =
                 <Pie data={healthData} cx="50%" cy="50%" innerRadius={45} outerRadius={70} dataKey="value">
                   {healthData.map((e, idx) => <Cell key={idx} fill={e.color} />)}
                 </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -130,7 +130,7 @@ export const EngineeringDashboard: React.FC<DashboardProps> = ({ onNavigate }) =
               <BarChart data={defectAgeData}>
                 <XAxis dataKey="bucket" stroke="#6E8AA3" fontSize={10} tickLine={false} />
                 <YAxis stroke="#6E8AA3" fontSize={10} tickLine={false} />
-                <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
                 <Bar dataKey="count" fill="#38BDF8" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -142,7 +142,7 @@ export const EngineeringDashboard: React.FC<DashboardProps> = ({ onNavigate }) =
       </div>
 
       {/* Shared Work Opportunities Callout */}
-      <div className="p-5 rounded-2xl bg-gradient-to-r from-[#102A43] to-[#163B5C] border border-rail-teal/40 shadow-lg">
+      <div className="p-5 rounded-2xl bg-white border border-rail-teal/40 shadow-lg">
         <div className="flex items-center gap-2 mb-2">
           <Sparkles className="w-4 h-4 text-rail-teal" />
           <h3 className="text-xs font-bold text-rail-text uppercase tracking-wider">
