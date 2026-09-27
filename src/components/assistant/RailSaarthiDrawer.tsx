@@ -70,7 +70,7 @@ export const RailSaarthiDrawer: React.FC<RailSaarthiDrawerProps> = ({
         {/* Header */}
         <div className="p-4 border-b border-rail-border bg-rail-deep flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#20C6B7] to-[#38BDF8] p-0.5 flex items-center justify-center shadow-lg shadow-cyan-900/30">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#20C6B7] to-[#38BDF8] p-0.5 flex items-center justify-center shadow-lg shadow-slate-200/60">
               <div className="w-full h-full bg-rail-bg rounded-[10px] flex items-center justify-center">
                 <Bot className="w-5 h-5 text-rail-teal" />
               </div>
@@ -125,7 +125,7 @@ export const RailSaarthiDrawer: React.FC<RailSaarthiDrawerProps> = ({
 
               <div className={`max-w-[85%] rounded-xl p-3.5 text-xs leading-relaxed ${
                 m.sender === 'user'
-                  ? 'bg-gradient-to-r from-[#163B5C] to-[#102A43] border border-rail-teal/40 text-rail-text'
+                  ? 'bg-slate-50 border border-rail-teal/40 text-rail-text'
                   : 'bg-rail-deep border border-rail-border text-rail-text'
               }`}>
                 <div className="whitespace-pre-line prose prose-invert max-w-none text-xs">
