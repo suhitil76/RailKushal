@@ -104,7 +104,7 @@ export const SntDashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                 <Pie data={gearHealthData} cx="50%" cy="50%" innerRadius={45} outerRadius={70} dataKey="value">
                   {gearHealthData.map((e, idx) => <Cell key={idx} fill={e.color} />)}
                 </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -128,7 +128,7 @@ export const SntDashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               <BarChart data={sntCategoryData}>
                 <XAxis dataKey="category" stroke="#6E8AA3" fontSize={9} tickLine={false} />
                 <YAxis stroke="#6E8AA3" fontSize={10} tickLine={false} />
-                <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
                 <Bar dataKey="count" fill="#F4B942" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
