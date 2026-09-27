@@ -117,7 +117,7 @@ export const AnalyticsReportsPage: React.FC = () => {
               <BarChart data={riskSectionData}>
                 <XAxis dataKey="section" stroke="#6E8AA3" fontSize={10} tickLine={false} />
                 <YAxis stroke="#6E8AA3" fontSize={10} domain={[0, 100]} tickLine={false} />
-                <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
                 <Bar dataKey="score" fill="#F05252" name="Risk Index (0-100)" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -138,7 +138,7 @@ export const AnalyticsReportsPage: React.FC = () => {
                 <Pie data={recurringDefects} cx="50%" cy="50%" innerRadius={45} outerRadius={70} dataKey="count">
                   {recurringDefects.map((e, idx) => <Cell key={idx} fill={e.color} />)}
                 </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
