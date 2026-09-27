@@ -215,7 +215,7 @@ export const RequestDetailPage: React.FC<RequestDetailPageProps> = ({
           </div>
 
           {/* Multi-Department Bundling Opportunities */}
-          <div className="p-5 rounded-2xl bg-gradient-to-r from-[#102A43] to-[#163B5C] border border-rail-teal/40 shadow-lg">
+          <div className="p-5 rounded-2xl bg-white border border-rail-teal/40 shadow-lg">
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="w-4 h-4 text-rail-teal" />
               <h3 className="text-xs font-bold text-rail-text uppercase tracking-wider">
