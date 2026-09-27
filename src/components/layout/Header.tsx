@@ -72,18 +72,18 @@ export const Header: React.FC<HeaderProps> = ({
             <Radio className="w-3 h-3 animate-pulse" /> Live COA/TMS Sim
           </span>
           <span className="text-amber-500">|</span>
-          <span className="font-mono text-amber-700">Div: PUNE / CR</span>
+          <span className="font-mono text-amber-700">Network: ALL INDIA</span>
         </div>
       </div>
 
       {/* Main Navy Topbar */}
-      <div className="flex items-center justify-between h-14 px-5 bg-[#12355B]">
+      <div className="flex items-center justify-between h-14 px-5 bg-white border-b border-rail-border">
         {/* Left: Breadcrumbs & Path */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-blue-300 text-xs">RailKushal</span>
-            <span className="text-blue-400">/</span>
-            <span className="font-semibold text-white">{breadcrumb}</span>
+            <span className="text-rail-muted text-xs">RailKushal</span>
+            <span className="text-slate-400">/</span>
+            <span className="font-semibold text-rail-text">{breadcrumb}</span>
           </div>
         </div>
 
@@ -96,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({
               placeholder="Search station, section, task (ENG-104), block ID..." 
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full bg-blue-900/40 border border-blue-700/50 rounded-lg pl-9 pr-4 py-1.5 text-xs text-white placeholder-blue-300 focus:outline-none focus:border-blue-400 focus:bg-blue-900/60"
+              className="w-full bg-slate-50 border border-rail-border rounded-lg pl-9 pr-4 py-1.5 text-xs text-white placeholder:text-rail-muted focus:outline-none focus:border-rail-teal focus:bg-white"
             />
           </form>
         </div>
@@ -106,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* RailSaarthi AI Trigger */}
           <button 
             onClick={onOpenRailSaarthi}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-blue-800/60 border border-blue-600/50 hover:border-rail-teal hover:bg-blue-800 text-xs font-medium text-rail-teal transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-50 border border-rail-border hover:border-rail-teal hover:bg-slate-100 text-xs font-medium text-rail-teal transition-colors"
             title="Ask RailSaarthi AI Assistant"
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -116,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Notifications Bell */}
           <button 
             onClick={onOpenNotifications}
-            className="relative p-2 rounded-lg bg-blue-800/60 border border-blue-600/50 hover:border-blue-400 text-blue-200 hover:text-white transition-colors"
+            className="relative p-2 rounded-lg bg-slate-50 border border-blue-600/50 hover:border-rail-teal text-rail-secondary hover:text-rail-text transition-colors"
             title="Notifications"
           >
             <Bell className="w-4 h-4" />
