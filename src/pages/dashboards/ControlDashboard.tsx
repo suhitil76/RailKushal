@@ -93,7 +93,7 @@ export const ControlDashboard: React.FC<ControlDashboardProps> = ({ onNavigate }
   return (
     <div className="p-6 space-y-6 max-w-[1600px] mx-auto">
       {/* Top Banner with Quick Actions */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-[#0B1F33] via-[#102A43] to-[#163B5C] border border-rail-border p-5 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-rail-border p-5 rounded-2xl shadow-xl">
         <div>
           <div className="flex items-center gap-2">
             <span className="px-2 py-0.5 rounded bg-rail-teal/20 border border-rail-teal/40 text-rail-teal text-[10px] font-bold uppercase tracking-wider font-mono">
@@ -245,8 +245,8 @@ export const ControlDashboard: React.FC<ControlDashboardProps> = ({ onNavigate }
                   ))}
                 </Pie>
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', borderRadius: '8px', fontSize: '11px' }}
-                  itemStyle={{ color: '#E6F4F1' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', borderRadius: '8px', fontSize: '11px' }}
+                  itemStyle={{ color: '#0F172A' }}
                 />
               </PieChart>
             </ResponsiveContainer>
@@ -276,7 +276,7 @@ export const ControlDashboard: React.FC<ControlDashboardProps> = ({ onNavigate }
                 <XAxis dataKey="dept" stroke="#6E8AA3" fontSize={10} tickLine={false} />
                 <YAxis stroke="#6E8AA3" fontSize={10} tickLine={false} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', borderRadius: '8px', fontSize: '11px' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', borderRadius: '8px', fontSize: '11px' }}
                 />
                 <Bar dataKey="Critical" stackId="a" fill="#F05252" radius={[0, 0, 0, 0]} />
                 <Bar dataKey="High" stackId="a" fill="#F4B942" />
@@ -305,7 +305,7 @@ export const ControlDashboard: React.FC<ControlDashboardProps> = ({ onNavigate }
                 <XAxis dataKey="day" stroke="#6E8AA3" fontSize={10} tickLine={false} />
                 <YAxis stroke="#6E8AA3" fontSize={10} domain={[70, 100]} tickLine={false} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', borderRadius: '8px', fontSize: '11px' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', borderRadius: '8px', fontSize: '11px' }}
                 />
                 <Line type="monotone" dataKey="utilization" stroke="#20C6B7" strokeWidth={2.5} dot={{ r: 3, fill: '#20C6B7' }} />
                 <Line type="monotone" dataKey="availability" stroke="#38BDF8" strokeWidth={2} strokeDasharray="3 3" dot={false} />
