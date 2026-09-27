@@ -12,7 +12,7 @@ export const RailLogo: React.FC<RailLogoProps> = ({ size = 'md', showText = true
   return (
     <div className="flex items-center gap-2.5 select-none">
       <div 
-        className="relative flex items-center justify-center rounded-lg bg-gradient-to-br from-[#102A43] via-[#0B1F33] to-[#071626] border border-rail-border p-1.5 shadow-md shadow-cyan-950/40"
+        className="relative flex items-center justify-center rounded-lg bg-white border border-rail-border p-1.5 shadow-md shadow-slate-200/60"
         style={{ width: iconSize + 12, height: iconSize + 12 }}
       >
         {/* SVG Railway tracks converging into a network intelligence node */}
