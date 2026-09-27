@@ -52,7 +52,7 @@ export const TrdDashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => onNavigate('/requests/new')}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-rail-cyan hover:bg-rail-cyan/90 text-white text-xs font-bold transition-all shadow-md shadow-cyan-950/40"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-rail-cyan hover:bg-rail-cyan/90 text-white text-xs font-bold transition-all shadow-md shadow-slate-200/60"
           >
             <PlusCircle className="w-4 h-4" />
             <span>New Power Block Request</span>
@@ -103,7 +103,7 @@ export const TrdDashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                 <Pie data={oheHealthData} cx="50%" cy="50%" innerRadius={45} outerRadius={70} dataKey="value">
                   {oheHealthData.map((e, idx) => <Cell key={idx} fill={e.color} />)}
                 </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -127,7 +127,7 @@ export const TrdDashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               <BarChart data={powerBlockData}>
                 <XAxis dataKey="type" stroke="#6E8AA3" fontSize={9} tickLine={false} />
                 <YAxis stroke="#6E8AA3" fontSize={10} tickLine={false} />
-                <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
                 <Bar dataKey="count" fill="#20C6B7" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
