@@ -90,13 +90,13 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Center: Global Search Bar */}
         <div className="flex-1 max-w-md mx-6">
           <form onSubmit={handleSearchSubmit} className="relative">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-300" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-rail-muted" />
             <input 
               type="text" 
               placeholder="Search station, section, task (ENG-104), block ID..." 
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-50 border border-rail-border rounded-lg pl-9 pr-4 py-1.5 text-xs text-white placeholder:text-rail-muted focus:outline-none focus:border-rail-teal focus:bg-white"
+              className="w-full bg-slate-50 border border-rail-border rounded-lg pl-9 pr-4 py-1.5 text-xs text-rail-text placeholder:text-rail-muted focus:outline-none focus:border-rail-teal focus:bg-white"
             />
           </form>
         </div>
@@ -116,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Notifications Bell */}
           <button 
             onClick={onOpenNotifications}
-            className="relative p-2 rounded-lg bg-slate-50 border border-blue-600/50 hover:border-rail-teal text-rail-secondary hover:text-rail-text transition-colors"
+            className="relative p-2 rounded-lg bg-slate-50 border border-rail-border hover:border-rail-teal text-rail-secondary hover:text-rail-text transition-colors"
             title="Notifications"
           >
             <Bell className="w-4 h-4" />
@@ -131,13 +131,13 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="relative">
             <button 
               onClick={() => setShowRoleDropdown(!showRoleDropdown)}
-              className="flex items-center gap-2.5 pl-2.5 pr-2 py-1.5 rounded-lg bg-blue-800/60 border border-blue-600/50 hover:border-blue-400 text-left transition-colors"
+              className="flex items-center gap-2.5 pl-2.5 pr-2 py-1.5 rounded-lg bg-slate-50 border border-blue-600/50 hover:border-rail-teal text-left transition-colors"
             >
               <div className="w-7 h-7 rounded-full bg-rail-teal flex items-center justify-center text-xs font-bold text-white">
                 {currentUser?.name.charAt(0) || 'U'}
               </div>
               <div className="hidden md:flex flex-col text-xs leading-none">
-                <span className="font-semibold text-white">{currentUser?.name}</span>
+                <span className="font-semibold text-rail-text">{currentUser?.name}</span>
                 <span className="text-[10px] text-rail-teal uppercase font-mono mt-0.5">
                   {currentUser?.role.replace(/_/g, ' ')}
                 </span>
