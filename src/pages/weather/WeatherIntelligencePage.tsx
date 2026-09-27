@@ -142,7 +142,7 @@ export const WeatherIntelligencePage: React.FC<WeatherIntelligencePageProps> = (
               <BarChart data={precipData}>
                 <XAxis dataKey="date" stroke="#6E8AA3" fontSize={10} tickLine={false} />
                 <YAxis stroke="#6E8AA3" fontSize={10} tickLine={false} />
-                <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
                 <Bar dataKey="rainfallMm" fill="#38BDF8" name="Rainfall (mm/hr)" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
