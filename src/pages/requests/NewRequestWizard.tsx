@@ -561,7 +561,7 @@ export const NewRequestWizard: React.FC<NewRequestWizardProps> = ({ onNavigate }
             </div>
 
             {/* AI Priority Card */}
-            <div className="p-5 rounded-xl bg-gradient-to-r from-[#102A43] to-[#163B5C] border border-rail-teal shadow-xl">
+            <div className="p-5 rounded-xl bg-white border border-rail-teal shadow-xl">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-rail-teal" />
