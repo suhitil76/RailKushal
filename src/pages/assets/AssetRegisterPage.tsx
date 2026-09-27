@@ -252,7 +252,7 @@ export const AssetRegisterPage: React.FC<AssetRegisterPageProps> = ({ onNavigate
                     <Pie data={healthDistribution} cx="50%" cy="50%" innerRadius={45} outerRadius={70} dataKey="count">
                       {healthDistribution.map((e, idx) => <Cell key={idx} fill={e.color} />)}
                     </Pie>
-                    <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                    <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
