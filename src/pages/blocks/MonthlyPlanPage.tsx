@@ -102,7 +102,7 @@ export const MonthlyPlanPage: React.FC<MonthlyPlanPageProps> = ({ onNavigate }) 
               <BarChart data={monthlyCapacityData}>
                 <XAxis dataKey="week" stroke="#6E8AA3" fontSize={10} tickLine={false} />
                 <YAxis stroke="#6E8AA3" fontSize={10} tickLine={false} />
-                <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
                 <Bar dataKey="availableCapacityHours" fill="#163B5C" name="Available Corridor Capacity" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="allocatedHours" fill="#20C6B7" name="AI Allocated Integrated Hours" radius={[4, 4, 0, 0]} />
               </BarChart>
@@ -124,7 +124,7 @@ export const MonthlyPlanPage: React.FC<MonthlyPlanPageProps> = ({ onNavigate }) 
               <AreaChart data={backlogReductionForecast}>
                 <XAxis dataKey="week" stroke="#6E8AA3" fontSize={10} tickLine={false} />
                 <YAxis stroke="#6E8AA3" fontSize={10} tickLine={false} />
-                <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
                 <Area type="monotone" dataKey="backlog" stroke="#F05252" fill="#F05252" fillOpacity={0.15} name="Backlog Tasks" />
                 <Area type="monotone" dataKey="availability" stroke="#34D399" fill="#34D399" fillOpacity={0.15} name="Track Availability %" />
               </AreaChart>
