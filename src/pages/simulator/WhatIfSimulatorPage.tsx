@@ -244,7 +244,7 @@ export const WhatIfSimulatorPage: React.FC = () => {
             <BarChart data={comparisonChartData}>
               <XAxis dataKey="name" stroke="#6E8AA3" fontSize={11} tickLine={false} />
               <YAxis stroke="#6E8AA3" fontSize={10} tickLine={false} />
-              <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+              <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
               <Bar dataKey="Baseline" fill="#6E8AA3" name="Conventional Baseline" radius={[4, 4, 0, 0]} />
               <Bar dataKey="RailKushal" fill="#20C6B7" name="RailKushal Synchronized" radius={[4, 4, 0, 0]} />
             </BarChart>
