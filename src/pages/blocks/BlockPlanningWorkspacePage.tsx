@@ -116,7 +116,7 @@ export const BlockPlanningWorkspacePage: React.FC<BlockPlanningWorkspaceProps> =
 
       {/* Baseline Comparison Card (if scheduler run) */}
       {showBaselineComparison && (
-        <div className="p-5 rounded-2xl bg-gradient-to-r from-[#102A43] via-[#163B5C] to-[#0B1F33] border border-rail-teal shadow-xl animate-in fade-in">
+        <div className="p-5 rounded-2xl bg-white border border-rail-teal shadow-xl animate-in fade-in">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-rail-teal" />
