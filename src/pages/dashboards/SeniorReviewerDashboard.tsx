@@ -106,7 +106,7 @@ export const SeniorReviewerDashboard: React.FC<DashboardProps> = ({ onNavigate }
               <LineChart data={divisionAvailabilityTrend}>
                 <XAxis dataKey="month" stroke="#6E8AA3" fontSize={10} tickLine={false} />
                 <YAxis stroke="#6E8AA3" fontSize={10} domain={[88, 98]} tickLine={false} />
-                <Tooltip contentStyle={{ backgroundColor: '#071626', borderColor: '#244B6A', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', fontSize: '11px' }} />
                 <Line type="monotone" dataKey="availability" stroke="#34D399" strokeWidth={3} name="RailKushal Synchronized" />
                 <Line type="monotone" dataKey="baseline" stroke="#6E8AA3" strokeWidth={2} strokeDasharray="4 4" name="Siloed Baseline" />
               </LineChart>
